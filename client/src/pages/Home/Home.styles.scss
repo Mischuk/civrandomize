@@ -1,0 +1,40 @@
+.Home {
+    @import "../../assets/styles/core.styles.scss";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__form {
+        width: 100%;
+        max-height: 100%;
+        padding-top: $gap;
+        padding-right: calc(50vw - #{(500px / 2)});
+        padding-bottom: $gap;
+        padding-left: calc(50vw - #{(500px / 2)});
+        overflow: auto;
+
+        @include mq("xs") {
+            padding-right: $gap;
+            padding-left: $gap;
+        }
+    }
+
+    .my-node-enter {
+        opacity: 0;
+    }
+
+    .my-node-enter-active {
+        opacity: 1;
+        transition: opacity 3000ms;
+    }
+
+    .my-node-exit {
+        opacity: 1;
+    }
+
+    .my-node-exit-active {
+        opacity: 0;
+        transition: opacity 3000ms;
+    }
+}

@@ -1,0 +1,91 @@
+// Themes
+$colors: (
+    "primary": yellow,
+    "secondary": blue,
+    "error": #ff6060,
+    "success": green,
+    "black": black,
+    "white": white,
+);
+
+@function color($name) {
+    @return map-get($colors, $name);
+}
+
+// Core variables
+$gap: 16px;
+$container: 1200px;
+$form-element-height: 50px;
+
+// Media queries
+$breakpoints: (
+    "xxs": 420px,
+    "xs": 568px,
+    "sm": 768px,
+    "md": 992px,
+    "lg": 1200px,
+    "xl": 1400px,
+    "xxl": 1600px,
+);
+
+@mixin mq($width, $type: max) {
+    @if map-has-key($breakpoints, $width) {
+        $width: map-get($breakpoints, $width);
+
+        @if ($type == max) {
+            $width: $width - 1px;
+        }
+
+        @media only screen and (#{$type}-width: $width) {
+            @content;
+        }
+    }
+}
+
+// Mixins
+@mixin font-button($size: 14px) {
+    font-weight: 600;
+    font-size: $size;
+    font-family: serif;
+    line-height: 1;
+}
+
+@mixin hover() {
+    @media (hover: hover) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin placeholder() {
+    &::placeholder {
+        @content;
+    }
+
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+}
+
+@mixin truncate($truncate-width, $wrap: true) {
+    max-width: $truncate-width;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    @if ($wrap == true) {
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "mongoUrl": "mongodb+srv://Mischuk:FBU8Sa7Ew93KyAKS@cluster0.kthzr.mongodb.net/CivRandomize?retryWrites=true&w=majority",
+    "jwtSecret": "randomize key"
+}
