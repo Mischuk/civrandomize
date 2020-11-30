@@ -41,7 +41,10 @@ async function start() {
 
             socket.on("joinClient", async (data) => {
                 const newUser = {name: data.userName, id: socket.id};
-                clients.push(newUser);
+                if ( !clients.find(({name}) => name === data.userName) ) {
+                    clients.push(newUser);
+                }
+
                 io.sockets.emit("joinServer", { clients });
             });
 

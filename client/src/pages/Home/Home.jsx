@@ -12,7 +12,7 @@ import "./Home.styles.scss";
 function Home({ logined, loginUser, user, socket }) {
 
     const { loading, request, error, clearError } = useHttp();
-    const [totalConnections, setTotalConnections] = useState(0);
+    const [totalConnections, setTotalConnections] = useState("");
 
     useEffect(function() {
         socket.on("joinServer", ({ clients }) => {

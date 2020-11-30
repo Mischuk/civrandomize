@@ -6,7 +6,7 @@ import { getData } from "../../actions/app.actions";
 import { RoutesContainer } from "../../Routes";
 import Loader from "../Loader";
 import "./App.styles.scss";
-const socket = io({upgrade: false});
+const socket = io();
 
 function App({ loading, logined, getData }) {
 
