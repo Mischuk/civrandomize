@@ -3,7 +3,12 @@ import { createSelector } from "reselect";
 
 export const appSelector = state => cloneDeep(state.app);
 
-export const userAuthSelector = createSelector(
+export const loginedSelector = createSelector(
     appSelector,
-    (app) => app.isAuth
+    (app) => app.logined
+);
+
+export const userSelector = createSelector(
+    appSelector,
+    (app) => app.user
 );

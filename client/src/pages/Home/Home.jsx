@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/app.actions";
 import Form from "../../components/Form";
 import { useHttp } from "../../hooks/http.hook";
-import { userAuthSelector } from "../../selectors/app.selectors";
+import { loginedSelector, userSelector } from "../../selectors/app.selectors";
 import "./Home.styles.scss";
 
-function Home({ isAuth, loginUser, userName }) {
+
+
+
+function Home({ logined, loginUser, user, socket }) {
+
     const { loading, request, error, clearError } = useHttp();
+    const [totalConnections, setTotalConnections] = useState(0);
+
+    useEffect(function() {
+        socket.on("joinServer", ({ clients }) => {
+            console.log("joinServer", clients);
+
+            setTotalConnections(clients.map(client => client.name).join(", "));
+        });
+        socket.on("leaveServer", ({ clients }) => {
+            console.log("leaveServer", clients);
+            setTotalConnections(clients.map(client => client.name).join(", "));
+        });
+      }, [socket]);
 
     const loginHandler = async body => {
         try {
@@ -15,6 +32,7 @@ function Home({ isAuth, loginUser, userName }) {
 
             if (data) {
                 loginUser(data);
+                socket.emit("joinClient", data);
             }
         } catch (error) {}
     };
@@ -26,8 +44,6 @@ function Home({ isAuth, loginUser, userName }) {
             loginHandler(user);
         } catch (error) {}
     };
-
-
 
     const handleFormSubmit = (type, value) => {
         if (type === "signup") {
@@ -41,15 +57,24 @@ function Home({ isAuth, loginUser, userName }) {
 
     return (
         <div className="Home">
-            {!isAuth && (
+            <div className="Home__header">
+                {/* <div className="Home__header-item">
+                    Connected status:{" "}
+                    <span className={`Home__header-item-status ${isConnected ? "is-success" : "is-failure"}`}>
+                        {isConnected ? "online" : "offline"}
+                    </span>
+                </div> */}
+                <div className="Home__header-item">Total connections: {totalConnections}</div>
+            </div>
+            {!logined && (
                 <div className="Home__form">
                     <Form action={handleFormSubmit} clearError={clearError} serverError={error} loading={loading} />
                 </div>
             )}
 
-            {isAuth && (
+            {logined && (
                 <div>
-                    <h1 style={{ color: "white" }}>Hello, {userName}</h1>
+                    <h1 style={{ color: "white" }}>Hello1, {user.name}</h1>
                 </div>
             )}
         </div>
@@ -57,14 +82,14 @@ function Home({ isAuth, loginUser, userName }) {
 }
 const mapStateToProps = state => {
     return {
-        isAuth: userAuthSelector(state),
-        userName: state.app.userName,
+        logined: loginedSelector(state),
+        user: userSelector(state),
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        loginUser: userData => dispatch(loginUser(userData)),
+        loginUser: data => dispatch(loginUser(data)),
     };
 };
 

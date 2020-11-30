@@ -1,24 +1,28 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { io } from "socket.io-client";
 import { getData } from "../../actions/app.actions";
 import { RoutesContainer } from "../../Routes";
 import Loader from "../Loader";
 import "./App.styles.scss";
+const socket = io({upgrade: false});
 
-function App({ isAppLoading, isAuth, getData }) {
+function App({ loading, logined, getData }) {
+
     useEffect(() => {
         getData();
     }, [getData]);
 
-    return (
-        <div className={`App ${isAppLoading ? "is-loading" : "is-loaded"}`}>
-            <div className="App__wrapper">
-                <Loader shown={isAppLoading} />
 
-                {!isAppLoading && (
+    return (
+        <div className={`App ${loading ? "is-loading" : "is-loaded"}`}>
+            <div className="App__wrapper">
+                <Loader shown={loading} />
+
+                {!loading && (
                     <Router>
-                        <RoutesContainer isAuth={isAuth} />
+                        <RoutesContainer socket={socket} logined={logined}  />
                     </Router>
                 )}
             </div>
@@ -27,11 +31,14 @@ function App({ isAppLoading, isAuth, getData }) {
 }
 
 const mapStateToProps = state => ({
-    isAppLoading: state.app.isAppLoading,
-    isAuth: state.app.isAuth,
+    loading: state.app.loading,
+    logined: state.app.logined,
 });
-const mapDispatchToProps = dispatch => ({
-    getData: () => dispatch(getData()),
-});
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getData: () => dispatch(getData())
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

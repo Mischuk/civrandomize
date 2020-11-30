@@ -1,11 +1,11 @@
 import serializeParams from './serializeParams';
 
-const API_PATH = process.env.REACT_APP_API_PATH;
+
 
 class ApiConfig {
     constructor(methods = []) {
         methods.forEach(({ name, url }) => {
-            this[name] = `${API_PATH}/${url}`;
+            this[name] = `${url}`;
         });
     }
 
@@ -24,5 +24,5 @@ class ApiConfig {
 }
 
 export default new ApiConfig([
-    { name: 'data', url: 'data' },
+    { name: 'nations', url: '/api/nations' },
 ]);

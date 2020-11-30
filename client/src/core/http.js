@@ -8,12 +8,10 @@ class Http {
         const xhr = new window.XMLHttpRequest();
         xhr.open(method, url);
         headers.forEach(({ key, value }) => xhr.setRequestHeader(key, value));
-        xhr.withCredentials = true;
+        xhr.withCredentials = false;
         const promise = new Promise((resolve, reject) => {
             xhr.onload = () => {
-                if (xhr.status === 401) {
-                    window.location.href = process.env.REACT_APP_LOGIN;
-                } else if (xhr.status >= 200 && xhr.status < 300) {
+                if (xhr.status >= 200 && xhr.status < 300) {
                     try {
                         resolve(JSON.parse(xhr.response));
                     } catch (err) {
@@ -52,10 +50,6 @@ class Http {
 
     delete(url, body) {
         return this.fetch("DELETE", url, JSON.stringify(body));
-    }
-
-    sendFormData(url, formData) {
-        return this.fetch("POST", url, formData, []);
     }
 }
 

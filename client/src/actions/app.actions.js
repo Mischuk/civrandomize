@@ -1,4 +1,5 @@
 import { APP } from "../core/actionNames";
+import { getNations } from "../core/api";
 
 const { SET_FIELD, SET_DATA, RESET } = APP;
 
@@ -23,15 +24,15 @@ export function reset() {
     };
 }
 
-export function loginUser({token, userId, userName}) {
+export function loginUser({ token, userId, userName }) {
     return dispatch => {
+        console.log("???");
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("userName", userName);
-        dispatch(setField("isAuth", true));
-        dispatch(setField("userId", userId));
-        dispatch(setField("userName", userName));
-    }
+        dispatch(setField("user", { name: userName, id: userId }));
+        dispatch(setField("logined", true));
+    };
 }
 
 export function logoutUser() {
@@ -39,21 +40,32 @@ export function logoutUser() {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("userName");
-        dispatch(setField("isAuth", false));
-        dispatch(setField("userId", null));
-        dispatch(setField("userName", null));
-    }
+        dispatch(setField("logined", false));
+        dispatch(setField("user", null));
+    };
 }
 
 export function getData() {
-    return dispatch => {
-        // dispatch(getCountries());
-        // dispatch(getFilters());
-        // dispatch(getKeywordSettingsData())
-        // dispatch(getKeywordNames());
-        // dispatch(getAccess());
-        setTimeout(() => {
-            dispatch(setField("isAppLoading", false));
-        }, 500);
+    return async dispatch => {
+        dispatch(setField("loading", true));
+        const onSuccess = data => {
+            dispatch(setField("data", data));
+            dispatch(setField("loading", false));
+            return data;
+        };
+
+        const onError = error => {
+            console.log(`error: `, error);
+            dispatch(setField("error", error.message));
+            dispatch(setField("loading", false));
+            return error;
+        };
+
+        try {
+            const data = await getNations();
+            return onSuccess(data);
+        } catch (error) {
+            return onError(error);
+        }
     };
 }

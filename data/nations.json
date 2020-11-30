@@ -1,0 +1,961 @@
+{
+    "nations": [
+      {
+        "id": 1,
+        "name": "Австрия",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_MARIA.png?resize=64%2C64",
+        "unique": ["Возможность за деньги аннексировать или делать сателлитами союзные ГГ."],
+        "buildings": [{
+          "title": "Кофейня (Ветряная мельница)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/BUILDING_COFFEE_HOUSE.png?resize=64%2C64",
+          "desc": "+25% скорость появления великих людей, +10% к производству зданий."
+        }],
+        "units": [
+          {
+            "title": "Гусары (Кавалерия)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_AUSTRIAN_HUSSAR.png?resize=64%2C64",
+            "desc": "+1 к дальности перемещения и радиуса обзора, +50% силы при фланговой атаке."
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая"],
+          "boost": "Создание ООН"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Америка",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_WASHINGTON.png?resize=64%2C64",
+        "unique": ["+1к дальности обзора для всех наземных отрядов", "-50% стоимость покупки тайлов"],
+        "units": [
+          {
+            "title": "Минитмен (Мушкетер)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_AMERICAN_MINUTEMAN.png?resize=64%2C64",
+            "desc": "+15% к силе на пересеченной местности, дает очки Золотого Века за каждый уничтоженный юнит (очки = сила юнита), не теряет движение на любом ландшафте."
+          },
+          {
+            "title": "Б-17 (Бомбардировщик)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_AMERICAN_MINUTEMAN.png?resize=64%2C64",
+            "desc": "+5 к силе обстрела, +33% к силе при бомбардировке города, -50% ущерба при перехвате."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Открытие бомбардировщика Б-17 - Эпоха Атома"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Англия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_ELIZABETH.png?resize=64%2C64",
+        "unique": ["+2 к перемещению в ход для всех кораблей и отрядов на переправе", "+1 доп. шпион"],
+
+        "units": [
+          {
+            "title": "Длиннолучник (Арбалетчик)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_ENGLISH_LONGBOWMAN.png?resize=64%2C64",
+            "desc": "+1 к дальности обстрела."
+          },
+          {
+            "title": "Линейный корабль (Фрегат)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_ENGLISH_SHIPOFTHELINE.png?resize=64%2C64",
+            "desc": "+5 к силе, +7 к обстрелу, +1 к радиусу обзора, -15 молотков в стоимости производства."
+          }
+        ],
+        "info": {
+          "type": ["На выбор игрока"],
+          "boost": "Сбалансированная держава, однако преобладает военная сторона (Фрегаты)"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Арабы",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_HARUN_AL_RASHID.png?resize=64%2C64",
+        "unique": ["Дальность действия караванов больше на 5 тайлов.", "Торговые пути распространяют религию из своих городов в 2 раза быстрее.", "Месторождения Нефти дают в 2 раза больше ресурсов."],
+        "buildings": [{
+          "title": "Базар (Рынок)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/BUILDING_BAZAAR.png?resize=64%2C64",
+          "desc": "+1 единица от каждого ресурса роскоши рядом с городом, +1 единица золота/ход, +2 единицы золота от каждого оазиса/источника нефти."
+        }],
+        "units": [
+          {
+            "title": "Лучник на верблюде (Рыцарь)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_ARABIAN_CAMELARCHER.png?resize=64%2C64",
+            "desc": "+21 к силе обстрела, -3 от общей силы, не может атаковать в ближнем бою, нет штрафа против городов."
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая"],
+          "boost": "За 30 ходов до создания ООН - торговые отношения с ГГ, распространение религии"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Ассирия",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_ASHURBANIPAL.png?resize=64%2C64",
+        "unique": ["Получают технологию противника при захвате его города. Действует не более 1 раза на город."],
+        "buildings": [{
+          "title": "Царская библиотека (Библиотека)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/BUILDING_ROYAL_LIBRARY.png?resize=64%2C64",
+          "desc": "+1 ячейка для шедевра литературы, при его заполнении дает +10 ОО всем новым юнитам."
+        }],
+        "units": [
+          {
+            "title": "Осадная башня (Катапульта)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_ASSYRIAN_SIEGE_TOWER.png?resize=64%2C64",
+            "desc": "+5 к силе, +2 к радиусу обзора, +33% к защите от обстрела, атакует только города и рядом с городом дает всем юнитам бонус в радиусе 2 клеток в виде +50% к силе осады, не требует развертки."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Научная"],
+          "boost": "С открытия осадной башни в Античности начать войну со страной с большим числом слаборазвитых городов, не более 1 захвата одного и того же города (+1 технология за город)"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ацтеки",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_MONTEZUMA.png?resize=64%2C64",
+        "unique": ["Уничтожение каждого вражеского отряда дает прибавку к культуре в размере его силы."],
+        "buildings": [{
+          "title": "Плавучие сады (Водяная мельница)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/BUILDING_FLOATING_GARDENS.png?resize=64%2C64",
+          "desc": "+15% к пище в городе, +2 к пище, -1 золота от стоимости содержания, требует расположения города на воде."
+        }],
+        "units": [
+          {
+            "title": "Ягуар (Воин)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_AZTEC_JAGUAR.png?resize=64%2C64",
+            "desc": "+33% к силе в лесах и джунглях, восстанавливает 25 единиц здоровья при уничтожении вражеского юнита, не теряет скорость в лесах и джунглях."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Культурная"],
+          "boost": "С Древнейшего мира и до конца игры вести войну \"набегами\". Благодаря уник. свойству растет потенциал в культ. победе, особенно заметно в первой и последней эпохах игры"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Бразилия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_PEDRO.png?resize=64%2C64",
+        "unique": ["+100% к туризму и +50% к скорости появления Великих Творцов во время Золотого века."],
+        "units": [
+          {
+            "title": "Прасинья (Пехота)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_BRAZILIAN_PRACINHA.png?resize=64%2C64",
+            "desc": "Дает очки Золотого Века за каждый уничтоженный юнит в размере его силы."
+          }
+        ],
+        "info": {
+          "type": ["Культурная"],
+          "boost": "Упор в культуру с самого начала игры"
+        }
+      },
+      {
+        "id": 8,
+        "name": "Вавилон",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_NEBUCHADNEZZAR.png?resize=64%2C64",
+        "unique": ["Бесплатный Великий Ученый после открытия Письменности", "x1,5 скорость появления Великих Ученых"],
+        "buildings": [{
+          "title": "Ворота Иштар (Стены)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/BUILDING_WALLS_OF_BABYLON.png?resize=64%2C64",
+          "desc": "-10 молотков от стоимости производства, +1 единица защиты + 50 единиц здоровья города."
+        }],
+        "units": [
+          {
+            "title": "Боуман (Лучник)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_BABYLONIAN_BOWMAN.png?resize=64%2C64",
+            "desc": "+2 к силе, +2 к обстрелу."
+          }
+        ],
+        "info": {
+          "type": ["Научная"],
+          "boost": "Упор в науку с самого начала игры + научные соглашения"
+        }
+      },
+      {
+        "id": 9,
+        "name": "Венеция",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/LEADER_ENRICO_DANDOLO.png?resize=64%2C64",
+        "unique": ["Нельзя создавать Поселенцев и аннексировать города.", "B 2 раза больше торговых путей.", "Mожет покупать отряды и здания в сателлитах.", "Бесплатный Венецианский купец после открытия Оптики."],
+
+        "units": [
+          {
+            "title": "Венецианский галеас (Галеас)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_VENETIAN_GALLEASS.png?resize=64%2C64",
+            "desc": "+2 к силе, +3 к обстрелу, но +10 молотков к стоимости производства."
+          },
+          {
+            "title": "Венецианский купец (Великий торговец)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/03/UNIT_VENETIAN_MERCHANT.png?resize=64%2C64",
+            "desc": "Может превратить полис в марионетку, +2 к скорости на море, +100% влияния и золота при совершении торговых сделок."
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая"],
+          "boost": "За 30 ходов до создания ООН скупать все ГГ"
+        }
+      },
+
+      {
+        "id": 10,
+        "name": "Византия",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_THEODORA.png?resize=64%2C64",
+        "unique": ["+1 доп. культ при основании религии"],
+        "units": [
+          {
+            "title": "Катафракт (Всадник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_BYZANTINE_CATAPHRACT.png?resize=64%2C64",
+            "desc": "+3 к силе, но -1 от дальности передвижения, получает штраф против городов в 33% вместо 25%, но получает защитные бонусы."
+          },
+          {
+            "title": "Дромон (Трирема)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_BYZANTINE_DROMON.png?resize=64%2C64",
+            "desc": "+10 к обстрелу, -2 от силы, +11 молотков к стоимости производства, не может атаковать в ближнем бою, +50% силы против кораблей."
+          }
+        ],
+        "info": {
+          "type": ["На выбор игрока"],
+          "boost": "Доп. культ использовать для получения преимуществ в развитии."
+        }
+      },
+      {
+        "id": 11,
+        "name": "Германия",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_BISMARCK.png?resize=64%2C64",
+        "unique": ["При победе над варварами в их лагере есть 67% вероятность, что они перейдут на вашу сторону и принесут 25 Золота", "-25% содержание наземных отрядов."],
+        "buildings": [{
+          "title": "Ганза (Банк)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_HANSE.png?resize=64%2C64",
+          "desc": "+5% к производству за каждый торговый путь с полисом."
+        }],
+        "units": [
+          {
+            "title": "Панцер (Танк)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_GERMAN_PANZER.png?resize=64%2C64",
+            "desc": "+10 к силе, +1 к дальности перемещения."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Научная"],
+          "boost": "Агрессия с Современности, пик в Эпоху Атома"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Голландия",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_WILLIAM.png?resize=64%2C64",
+        "unique": ["При продаже последней единицы ресурса роскоши сохраняется половина бонусного счастья."],
+        "buildings": [{
+          "title": "Польдеры (только на болотах и поймах)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_POLDER.png?resize=64%2C64",
+          "desc": "+3 еды, +2 золота и +1 производства после открытия экономики"
+        }],
+        "units": [
+          {
+            "title": "Морские гезы (Капер)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_DUTCH_SEA_BEGGAR.png?resize=64%2C64",
+            "desc": "+20% к силе против городов, +33% золота от ущерба городу, восстанавливает 15 ОЗ/ход за границей."
+          }
+        ],
+        "info": {
+          "type": ["Любой (кроме военной)"],
+          "boost": "Важен уклон в число городов благодаря экон. выгоде от уник. свойства. Война нежелательна"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Греция",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_ALEXANDER.png?resize=64%2C64",
+        "unique": ["Влияние на ГГ снижается в 2 раза медленнее, а растет в 2 раза быстрее."],
+
+        "units": [
+          {
+            "title": "Гетайр (Всадник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_GREEK_COMPANIONCAVALRY.png?resize=64%2C64",
+            "desc": "+2 к силе, +1 к дальности перемещения, +50% к скорости появления Великого генерала."
+          },
+          {
+            "title": "Гоплит (Копейщик)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_GREEK_HOPLITE.png?resize=64%2C64",
+            "desc": "+2 к силе."
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая", "Военная"],
+          "boost": "За 30 ходов до создания ООН начать перекупать ГГ/Война на ранних этапах игры благодаря уникальным юнитам."
+        }
+      },
+      {
+        "id": 14,
+        "name": "Гунны",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_ATTILA.png?resize=64%2C64",
+        "unique": ["Начинают со знанием Животноводства.", "+1 Производство от Пастбища.", "B 2 раза быстрее разрушают города.",  "Берут названия городов у других цивилизаций."],
+
+        "units": [
+          {
+            "title": "Таран (Копейщик)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_HUN_BATTERING_RAM.png?resize=64%2C64",
+            "desc": "+300% к мощи против городов, +19 молотков к стоимости производства, -1 от силы, -1 от дальности обзора, 33% силы в защите, +33% силы против обстрела, может атаковать только города."
+          },
+          {
+            "title": "Конный лучник (Колесница)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_HUN_HORSE_ARCHER.png?resize=64%2C64",
+            "desc": "+1 к силе, не требует лошадей, +15% к обстрелу на открытой местности."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Весь упор в военное развитие с самого начала игры"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Дания",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_HARALD.png?resize=64%2C64",
+        "unique": ["Юниты на переправе получают +1 к перемещению и тратят только 1 очко перемещения на высадку с моря.", "Разведчики, отряды ближнего боя, верховые отряды и бронетехника не тратят очки перемещения при грабеже."],
+
+        "units": [
+          {
+            "title": "Берсерк (Длинномечник)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_DANISH_BERSERKER.png?resize=64%2C64",
+            "desc": "+1 к дальности перемещения, не теряет силу при атаке с моря или через реку, доступен сразу после открытия технологии \"Литьё металлов\"."
+          },
+          {
+            "title": "Норвежские лыжники (Стрелки)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_DANISH_SKI_INFANTRY.png?resize=64%2C64",
+            "desc": "Двойная скорость на холмах, в тундре и снегах, +25% к силе на этих ландшафтах на равнине"
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Блицкриг в начале Новейшего времени при помощи лыжников"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Египет",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_RAMESSES.png?resize=64%2C64",
+        "unique": ["+20% произв. бонус при строительстве Чудес."],
+        "buildings": [{
+          "title": "Гробница (Храм)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_BURIAL_TOMB.png?resize=64%2C64",
+          "desc": "+2 к настроению, бесплатное содержание, удваивает золото от захвата города противником."
+        }],
+        "units": [
+          {
+            "title": "Боевая колесница (Колесница)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_EGYPTIAN_WARCHARIOT.png?resize=64%2C64",
+            "desc": "+1 к дальности перемещения, не требует лошадей."
+          }
+        ],
+        "info": {
+          "type": ["Культурная"],
+          "boost": "Постройка чудес света с культурными бонусами"
+        }
+      },
+      {
+        "id": 17,
+        "name": "Зулусы",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_SHAKA.png?resize=64%2C64",
+        "unique": ["+25% скорость получения новых повышений для юнитов", "-50% от стоимости содержания отрядов ближнего боя."],
+        "buildings": [{
+          "title": "Иканда (Казармы)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_IKANDA.png?resize=64%2C64",
+          "desc": "Бесплатная прокачка Рога Бизона(+1 к дальности перемещения, +25% к силе фланговой атаки, +10% к защите от обстрела) для всех отрядов доиндустриальной эпохи."
+        }],
+        "units": [
+          {
+            "title": "Импи (Пикинер)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_ZULU_IMPI.png?resize=64%2C64",
+            "desc": "Обстреливает врага с дистанции перед вступлением в ближний бой."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Активные военные действия со Средневековья и до Индустриальной эпохи"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Индия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_GANDHI.png?resize=64%2C64",
+        "unique": ["Несчастье от количества городов удваивается, несчастье от численности населения снижено в 2 раза."],
+        "buildings": [{
+          "title": "Могольский форт (Замок)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_MUGHAL_FORT.png?resize=64%2C64",
+          "desc": "-10 молотков от стоимости производства, +2 к культуре, +2 к туризму после открытия технологии \"Авиация\"."
+        }],
+        "units": [
+          {
+            "title": "Боевой слон (Колесница)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_INDIAN_WARELEPHANT.png?resize=64%2C64",
+            "desc": "+3 к силе, +1 к обстрелу, -1 к дальности перемещения, +14 молотков к стоимости производства, не требует лошадей."
+          }
+        ],
+        "info": {
+          "type": ["Любая, кроме военной"],
+          "boost": "Плавное развитие городов с ранним вкладом в покупку территорий города."
+        }
+      },
+      {
+        "id": 19,
+        "name": "Индонезия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_GAJAH_MADA.png?resize=64%2C64",
+        "unique": ["Первые 3 города, основанные на других континентах, получают по 2 уникальных ресурса роскоши (мускатный орех, гвоздика, перец) и не могут быть разрушены."],
+        "buildings": [{
+          "title": "Канди (Сады)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_CANDI.png?resize=64%2C64",
+          "desc": "+2 веры/ход, +2 веры за каждую культуру в городе."
+        }],
+        "units": [
+          {
+            "title": "Крис-воины (Мечник)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_KRIS_SWORDSMAN.png?resize=64%2C64",
+            "desc": "После первого боя можно выбрать 1 из 8 специальных прокачек."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Война с самых ранних эпох. Чем позднее начнете - тем меньше преимущество"
+        }
+      },
+
+      {
+        "id": 20,
+        "name": "Инки",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_PACHACUTI.png?resize=64%2C64",
+        "unique": ["Отряды не теряют скорость на холмах.", "Бесплатное содержание улучшений местности на холмах, -50% от стоимости содержания остальных улучшений."],
+        "buildings": [{
+          "title": "Терасса (только на холмах)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_TERRACE_FARM.png?resize=64%2C64",
+          "desc": "+1 еды и дополнительно +1 еды от каждой соседней горы. После открытия госслужбы и удобрей дает еще по +1 еды"
+        }],
+        "units": [
+          {
+            "title": "Пращник (Лучник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_INCAN_SLINGER.png?resize=64%2C64",
+            "desc": "-1 от силы, может отступать перед атакой противника в ближнем бою."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Только для умелых игроков. Важно уметь вести быструю войну при переходе через горы"
+        }
+      },
+      {
+        "id": 21,
+        "name": "Ирокезы",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_HIAWATHA.png?resize=64%2C64",
+        "unique": ["Юниты передвигаются по Лесам и Джунглям на своей земле как по дорогам.", "Леса и Джунгли соединяют города со столицей после открытия Колеса.", "Караваны используют Леса и Джунгли как дороги."],
+        "buildings": [{
+          "title": "Длинный дом (Мастерская)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_LONGHOUSE.png?resize=64%2C64",
+          "desc": "-20 молотков от стоимости производства, +1 молоток от каждого обрабатываемого леса, но не дает бонуса мастерской."
+        }],
+        "units": [
+          {
+            "title": "Могавк (Мечник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_IROQUOIAN_MOHAWKWARRIOR.png?resize=64%2C64",
+            "desc": "+33% к силе в лесах и джунглях, не требует железа."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Только для умелых игрок. Важно уметь тактично использовать местность (леса и джунгли) для ведения успешных боевовых действий с момента начала игры"
+        }
+      },
+      {
+        "id": 22,
+        "name": "Испания",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_ISABELLA.png?resize=64%2C64",
+        "unique": ["Открытие каждого Чуда природы дает 100 Золото, если открывают первыми - 500 Золота." ,"Бонусы от Чудес природы удваиваются."],
+
+        "units": [
+          {
+            "title": "Терция (Мушкетер)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SPANISH_CONQUISTADOR.png?resize=64%2C64",
+            "desc": "+2 к силе, +10 молотков к стоимости производства, +50% к силе против верховых отрядов."
+          },
+          {
+            "title": "Конкистадор (Рыцарь)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SPANISH_TERCIO.png?resize=64%2C64",
+            "desc": "+2 к дальности обзора, +15 молотков к стоимости производства, может основывать города на заморских территориях."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Экспансия с начала игры для бонусов с чудес света. В средневековье начинать покупать уникальных юнитов и вести войну"
+        }
+      },
+      {
+        "id": 23,
+        "name": "Карфаген",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_DIDO.png?resize=64%2C64",
+        "unique": ["Бесплатная Гавань в каждом приморском городе.", "Юниты могут переходить горы после появления первого Великого Генерала. При завершении хода на горе теряется 50 хитпойнтов."],
+
+        "units": [
+          {
+            "title": "Лесной слон (Всадник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_CARTHAGINIAN_FOREST_ELEPHANT.png?resize=64%2C64",
+            "desc": "+2 к силе, +25 молотков к стоимости производства, -1 от дальности перемещения, не требует лошадей, +100% к скорости появления Великого генерала."
+          },
+          {
+            "title": "Квинкверема (Трирема)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_CARTHAGINIAN_QUINQUEREME.png?resize=64%2C64",
+            "desc": "+3 к силе."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Начиная с Античности стремиться к появлению Великого Генерала, после чего начинать войну при помощи слонов и способности переходить горы"
+        }
+      },
+
+      {
+        "id": 24,
+        "name": "Кельты",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_BOUDICCA.png?resize=64%2C64",
+        "unique": ["+1 очко веры в каждом городе по соседству с девственным лесом; +2 очка веры, если таких лесов 3 или больше"],
+        "buildings": [{
+          "title": "Кейли (Опера)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_CEILIDH_HALL.png?resize=64%2C64",
+          "desc": "+3 к настроению"
+        }],
+        "units": [
+          {
+            "title": "Пиктский войн (Копейщик)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_CELT_PICTISH_WARRIOR.png?resize=64%2C64",
+            "desc": "+50% веры от силы уничтоженного врага, +20% к силе за границей."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Постоянные войны с начала игры. Желательно быть успешным в войнах с начала игры, так как потом потенциал падает. Быстрый доступ к религии и ее баффам вложить в армию."
+        }
+      },
+      {
+        "id": 25,
+        "name": "Китай",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_WU_ZETIAN.png?resize=64%2C64",
+        "unique": ["Великие генералы появляются в 1,5 раза чаще и дают дополнительный +15% бонус силы соседним отрядам"],
+        "buildings": [{
+          "title": "Бумажная мастерская (Библиотека)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_PAPER_MAKER.png?resize=64%2C64",
+          "desc": "+2 золота/ход, бесплатное содержание"
+        }],
+        "units": [
+          {
+            "title": "Чжугэ ну (Арбалетчик)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_CHINESE_CHUKONU.png?resize=64%2C64",
+            "desc": "-4 от обстрела, может атаковать дважды за ход и перемещаться после атаки."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Копить Великих Генералов и со Средневековья начинать войну в основном дальнобойными уник. юнитами. ВГ помогут усилить юнитов (Чжугэ Ну) несмотря на их естественную малую силу."
+        }
+      },
+      {
+        "id": 26,
+        "name": "Корея",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_SEJONG.png?resize=64%2C64",
+        "unique": ["+2 к Науке от каждого специалиста и улучшения Великих людей.", "Научный бонус при постройке каждого научного здания или Чуда в столице."],
+
+        "units": [
+          {
+            "title": "Хвачха (Требушет)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_KOREAN_HWACHA.png?resize=64%2C64",
+            "desc": "+12 к обстрелу, -1 от силы, +1 к дальности обзора, нет бонуса против городов."
+          },
+          {
+            "title": "Кобуксон (Каравелла)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_KOREAN_TURTLE_SHIP.png?resize=64%2C64",
+            "desc": "+16 к силе, -1 от дальности обзора, не может выходить в океан."
+          }
+        ],
+        "info": {
+          "type": ["Научная"],
+          "boost": "Весь упор с начала игры в науку, все просто."
+        }
+      },
+      {
+        "id": 27,
+        "name": "Майя",
+        "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_PACAL.png?resize=64%2C64",
+        "unique": ["Бесплатная Великая личность в конце каждого длинного цикла (394 года) после открытия Теологии. ВЛ каждого типа можно выбрать только один раз."],
+        "buildings": [{
+          "title": "Пирамида (Святилище)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_MAYA_PYRAMID.png?resize=64%2C64",
+          "desc": "+1 к вере/ход, +2 к науке/ход."
+        }],
+        "units": [
+          {
+            "title": "Атлатль (Лучник)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_MAYAN_ATLATLIST.png?resize=64%2C64",
+            "desc": "-4 молотка от стоимости производства, не требует научных знаний."
+          }
+        ],
+        "info": {
+          "type": ["Научная"],
+          "boost": "Начинать войну за Майя бессмысленно. Игра за эту цивилизацию сложна, оптимальный путь к победе - научный. Первый Великий Человек благодаря уник. свойству - Ученый."
+        }
+      },
+      {
+        "id": 28,
+        "name": "Марокко",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_AHMAD_ALMANSUR.png?resize=64%2C64",
+        "unique": ["+3 золота и +1 культура за каждый международный торговый путь (+2 Золота для владельца торгового пути в Марокко)"],
+        "buildings": [{
+          "title": "Касба (только в пустыне)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_KASBAH.png?resize=64%2C64",
+          "desc": "+1 еды, производства и золота"
+        }],
+        "units": [
+          {
+            "title": "Берберская конница (Кавалерия)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_BERBER_CAVALRY.png?resize=64%2C64",
+            "desc": "+25% к силе на своей территории, +50% к силе в пустыне."
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая"],
+          "boost": "Налаживаем торговые пути с начала игры, улучшаем отношения с ГГ и другими странами, наращиваем приток золота и ждем Конгресса."
+        }
+      },
+      {
+        "id": 29,
+        "name": "Монголы",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_GENGHIS_KHAN.png?resize=64%2C64",
+        "unique": ["+30% Сила в бою с отрядами ГГ и при их штурме.", "+1 очко перемещения в ход для всех верховых отрядов."],
+
+        "units": [
+          {
+            "title": "Кешик (Рыцарь)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_MONGOLIAN_KESHIK.png?resize=64%2C64",
+            "desc": "+16 к обстрелу, -5 от силы, +1 к дальности перемещения, +50% к скорости накопления опыта и появления Великого генерала."
+          },
+          {
+            "title": "Хан (Великий генерал)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_MONGOLIAN_KHAN.png?resize=64%2C64",
+            "desc": "+3 к дальности перемещения, на любой территории лечит окружающие отряды (15 ОЗ/ход)"
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Только война. С самого начала игры копим Великих Генералов, а в Средневековье засчет уникальных юнитов - Кешик - проводим изматывающие войны по принципу \"Напал - отошел\"."
+        }
+      },
+      {
+        "id": 30,
+        "name": "Персия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_DARIUS.png?resize=64%2C64",
+        "unique": ["Золотой век длится на 50% больше.", "Во время ЗВ юниты получают +1 очко перемещения в ход и +10% боевой бонус к силе."],
+        "buildings": [{
+          "title": "Двор сатрапа (Банк)",
+          "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_SATRAPS_COURT.png?resize=64%2C64",
+          "desc": "+2 к настроению, +1 к золоту/ход"
+        }],
+        "units": [
+          {
+            "title": "Бессмертные (Копейщик)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_PERSIAN_IMMORTAL.png?resize=64%2C64",
+            "desc": "+1 к силе, восстанавливает 10 ОЗ/ход на любой территории."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Начинайте игру со зданий, поднимающих настроение и приток золота. В итоге к началу Золотого Века (а войну надо начинать уже в Древнейшем мире/начале Античности) у Вас будет достаточно золота на покупку уник. юнитов, а уник.способность полностью раскроет их потенциал."
+        }
+      },
+      {
+        "id": 31,
+        "name": "Полинезия",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_KAMEHAMEHA.png?resize=64%2C64",
+        "unique": ["Юниты сразу могут переправляться через океан.", "+1 Обзор для отрядов на переправе", "+10% боевой бонус к силе для юнитов в радиусе 2 тайлов от Моаи."],
+        "buildings": [{
+          "title": "Моаи",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_MOAI.png?resize=64%2C64",
+          "desc": "+1 культуры и +1 культуры от каждого моаи рядом"
+        }],
+        "units": [
+          {
+            "title": "Маори (Воин)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_POLYNESIAN_MAORI_WARRIOR.png?resize=64%2C64",
+            "desc": "-10% от силы вражеских отрядов на соседних клетках."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Дипломатическая", "Культурная"],
+          "boost": "Война с самого начала игры. Чем раньше, тем лучше. Более сложный вариант для опытных игроков - разведка всей карты со старта, поиск лучших мест для отстройки города, наблюдение."
+        }
+      },
+      {
+        "id": 32,
+        "name": "Польша",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_CASIMIR.png?resize=64%2C64",
+        "unique": ["Бесплатный общ. институт при переходе в новую эру"],
+        "buildings": [{
+          "title": "Княжеская конюшня (Конюшня)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_DUCAL_STABLE.png?resize=64%2C64",
+          "desc": "-25 молотков от стоимости производства, +1 к золоту от лошадей, овец и коров, +15 ОО для верховых отрядов."
+        }],
+        "units": [
+          {
+            "title": "Крылатые гусары (Уланы)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_POLISH_WINGED_HUSSAR.png?resize=64%2C64",
+            "desc": "+3 к силе, +1 к дальности перемещения, +15% к силе на открытой местности, при атаке заставляет противника отступить, если наносит больше урона, чем получает."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Развиваем за счет уникальной способности общ. институты, направленные на развитие армии. С Нового времени при помощи крылатых гусаров активно ведем военные действия. Желательно успешные."
+        }
+      },
+      {
+        "id": 33,
+        "name": "Португалия",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_MARIA_I.png?resize=64%2C64",
+        "unique": ["В 2 раза больше золота от разнообразия ресурсов в международных торговых путях"],
+        "buildings": [{
+          "title": "Фейтория (только на побережье)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_FEITORIA.png?resize=64%2C64",
+          "desc": "+1 еды, +50% силы защиты юнитов, дает копию каждого ресурса роскоши ГГ"
+        }],
+        "units": [
+          {
+            "title": "Нау (Каравелла)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_PORTUGUESE_NAU.png?resize=64%2C64",
+            "desc": "+1 к дальности перемещения, 1 раз может продать экзотические товары у чужих берегов за опыт и золото"
+          }
+        ],
+        "info": {
+          "type": ["Дипломатическая"],
+          "boost": "Налаживаем отношения с ГГ за счет уникальных свойств торговли, обогащаемся сами и подкупаем те ГГ, до которых добраться не можем."
+        }
+      },
+      {
+        "id": 34,
+        "name": "Рим",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_AUGUSTUS.png?resize=64%2C64",
+        "unique": ["+25% Производственный бонус при постройке зданий, которые уже есть в столице"],
+
+        "units": [
+          {
+            "title": "Легион (Мечник)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_ROMAN_BALLISTA.png?resize=64%2C64",
+            "desc": "+3 к силе, может строить дороги и форты."
+          },
+          {
+            "title": "Баллиста (Катапульта)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_ROMAN_LEGION.png?resize=64%2C64",
+            "desc": "+1 к силе, +2 к обстрелу."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "С Античности начинаем клепать города, попутно создавая там уникальные юниты - Легион и Баллисту. И тут же в бой."
+        }
+      },
+      {
+        "id": 35,
+        "name": "Россия",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_CATHERINE.png?resize=64%2C64",
+        "unique": ["Стратегические ресурсы дают +1 очко Производства.", "В 2 раза больше ресурсов от каждого источника Лошадей, Железа и Урана."],
+        "buildings": [{
+          "title": "Крепость (Казармы)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_KREPOST.png?resize=64%2C64",
+          "desc": "-25% от стоимости расширения границ города за золото и культуру."
+        }],
+        "units": [
+          {
+            "title": "Казаки (Кавалерия)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_RUSSIAN_COSSACK.png?resize=64%2C64",
+            "desc": "+33% к силе в бою против раненых противников."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Стратегических ресурсов у Вас будет всегда достаточно для постоянного клепания юнитов. И лучше всего их начинать применять с Новейшего времени. Казаки в этом деле Вас не подведут."
+        }
+      },
+      {
+        "id": 36,
+        "name": "Сиам",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_RAMKHAMHAENG.png?resize=64%2C64",
+        "unique": ["На 50% больше еды, культуры и веры от друж. ГГ"],
+        "buildings": [{
+          "title": "Ват (Универстет)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_WAT.png?resize=64%2C64",
+          "desc": "+3 к культуре/ход"
+        }],
+        "units": [
+          {
+            "title": "Наресуанский слон (Рыцарь)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SIAMESE_WARELEPHANT.png?resize=64%2C64",
+            "desc": "+5 к силе, +50% к силе против верховых отрядов, -1 от дальности перемещения, не требует лошадей."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Дипломатическая"],
+          "boost": "Либо налаживаем отношения с ГГ и получаем приток пищи, т.е. дальнейшую возможность строить города и развивать их, либо со Средневековья забиваем всю карту своими слонами, чтобы успешно провести пару-тройку войн."
+        }
+      },
+      {
+        "id": 37,
+        "name": "Сонгай",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_ASKIA.png?resize=64%2C64",
+        "unique": ["В 3 раза больше Золота при взятии варварских лагерей и чужих городов.", "+100% к силе защиты юнитов на морской переправе", "Все наземные отряды атакуют с моря или через реку без потери силы."],
+        "buildings": [{
+          "title": "Пирамидальная мечеть (Храм)",
+          "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_MUD_PYRAMID_MOSQUE.png?resize=64%2C64",
+          "desc": "+2 к культуре/ход, бесплатное содержание."
+        }],
+        "units": [
+          {
+            "title": "Конница Мандекалу (Рыцарь)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SONGHAI_MUSLIMCAVALRY.png?resize=64%2C64",
+            "desc": "-10 молотков от стоимости производства, нет штрафа против городов."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Войну можно начинать уже с открытия Мореходства. Находим неподалеко города на реках/побережьях, и вперед."
+        }
+      },
+      {
+        "id": 38,
+        "name": "Турция",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_SULEIMAN.png?resize=64%2C64",
+        "unique": ["Корабли ближнего боя могут захватывать побежденные вражеские суда.", "-66% Золота на содержание кораблей"],
+
+        "units": [
+          {
+            "title": "Янычары (Мушкетер)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_OTTOMAN_JANISSARY.png?resize=64%2C64",
+            "desc": "+25% к силе в атаке, лечит 50 ОЗ при уничтожении вражеского юнита (кроме варваров)."
+          },
+          {
+            "title": "Сипахи (Уланы)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_OTTOMAN_SIPAHI.png?resize=64%2C64",
+            "desc": "+1 к дальности перемещения и обзора, не тратит очки движения при грабеже."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Начинаем войну с Нового времени. Уникальные способности дадут бонус Вашему флоту, а уникальные юниты сыграют свою роль на суше."
+        }
+      },
+      {
+        "id": 39,
+        "name": "Франция",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_NAPOLEON.png?resize=64%2C64",
+        "unique": ["+100% тематический бонус за подборку шедевров для музеев и Чудес света в столице"],
+        "buildings": [{
+          "title": "Шато (только рядом с ресурсом роскоши)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/IMPROVEMENT_CHATEAU.png?resize=64%2C64",
+          "desc": "+1 золота, +2 культуры. После открытия авиации дает доп. +2 золота + 1 культуры"
+        }],
+        "units": [
+          {
+            "title": "Королевский мушкетер (Мушкетер)",
+            "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_FRENCH_MUSKETEER.png?resize=64%2C64",
+            "desc": "+4 к силе."
+          }
+        ],
+        "info": {
+          "type": ["Культурная"],
+          "boost": "Весь потенциал в развитие культуры. Никаких войн, тратим золото только на багеты и оливье музеи, археологов и тому подобное для развития туризма и культуры."
+        }
+      },
+      {
+        "id": 40,
+        "name": "Швеция",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_GUSTAVUS_ADOLPHUS.png?resize=64%2C64",
+        "unique": ["+90 влияния при передаче Великой личности ГГ.", "Декларация о дружбе дает +10% к скорости появления ВЛ для обеих сторон."],
+
+        "units": [
+          {
+            "title": "Каролинская пехота (Стрелок)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SWEDISH_CAROLEAN.png?resize=64%2C64",
+            "desc": "Лечится абсолютно каждый ход."
+          },
+          {
+            "title": "Хаккапелита (Уланы)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SWEDISH_HAKKAPELIITTA.png?resize=64%2C64",
+            "desc": "+15% к силе на клетке с Генералом, прибавляет Генералу очки движения согласно своему уровню."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Дипломатическая"],
+          "boost": "С открытия Каролинской пехоты захватываем неугодные ГГ, передвигая баланс голосов для дипломатической победы на нашу сторону. Не забудьте поддерживать отношения с дружественными ГГ. Благо, это крайне просто для Швеции."
+        }
+      },
+      {
+        "id": 41,
+        "name": "Шошоны",
+        "image": "https://i0.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_POCATELLO.png?resize=64%2C64",
+        "unique": ["Новые города стартуют с доп. территорией.", "+15% боевой бонус для отрядов на своей земле"],
+
+        "units": [
+          {
+            "title": "Следопыт (Разведчик)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SHOSHONE_COMANCHE_RIDERS.png?resize=64%2C64",
+            "desc": "+3 к силе, +20 молотков к стоимости производства, позволяет выбрать бонус при открытии руин."
+          },
+          {
+            "title": "Команчи (Кавалерия)",
+            "image": "https://i1.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_SHOSHONE_PATHFINDER.png?resize=64%2C64",
+            "desc": "-25 молотков от стоимости производства, +1 к дальности передвижения."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Развитие необходимо вести путем экспансии. Строим многочисленные города поближе к территории противника, тем самым получаем бонус при сражениях с ним (в основном на дальнобойные орудия на своей территории)"
+        }
+      },
+      {
+        "id": 42,
+        "name": "Эфиопия",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_SELASSIE.png?resize=64%2C64",
+        "unique": ["+20% боевой бонус против цивилизаций с большим количеством городов"],
+        "buildings": [{
+          "title": "Стела (Монумент)",
+          "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/BUILDING_STELE.png?resize=64%2C64",
+          "desc": "+2 веры/ход."
+        }],
+        "units": [
+          {
+            "title": "Мехал Сефари (Стрелок)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_ETHIOPIAN_MEHAL_SEFARI.png?resize=64%2C64",
+            "desc": "-25 молотков от стоимости производства, +15% к силе на пересеченной местности, +30% к силе в столице, получает боевой бонус при сражении рядом со столицей."
+          }
+        ],
+        "info": {
+          "type": ["Военная"],
+          "boost": "Засчет уникального свойства ведем войну на своей территории (желательно в обороне), изматывая противника, после чего переходим к контратаке."
+        }
+      },
+      {
+        "id": 43,
+        "name": "Япония",
+        "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/LEADER_ODA_NOBUNAGA.png?resize=64%2C64",
+        "unique": ["Повреждения юнитов не снижают их силу в боях.", "Атолл дает +2 Культуры, Рыбацкие лодки дают +1 Культуры"],
+        "units": [
+          {
+            "title": "Самурай (Длинномечник)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_JAPANESE_SAMURAI.png?resize=64%2C64",
+            "desc": "+15% к силе на открытой местности, +100% к скорости появления Великого генерала, может создавать рыбацкие лодки."
+          },
+          {
+            "title": "Зеро (Истребитель)",
+            "image": "https://i2.wp.com/leshaigraet.ru/wp-content/uploads/2015/07/UNIT_JAPANESE_ZERO.png?resize=64%2C64",
+            "desc": "+33% к силе против истребителей, не требует нефти."
+          }
+        ],
+        "info": {
+          "type": ["Военная", "Научная"],
+          "boost": "Война в два этапа - в Средневековье и Эпоху Атома. В первый этап засчет самураев захватываем мелкие державы, которые в будущем дадут бонус к науке. Обеспечив себе первое место в рейтинге по притоку науки, раньше всех приходим к Эпохе Атома и захватываем весь мир при помощи Зеро."
+        }
+      }
+    ]
+  }

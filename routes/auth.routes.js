@@ -13,8 +13,8 @@ const router = Router();
 router.post(
     "/register",
     [
-        body("name").isLength({ min: 2 }).withMessage("name must be at least 2 chars long"),
-        body("password").isLength({ min: 2 }).withMessage("password must be at least 2 chars long"),
+        body("name").isLength({ min: 1 }).withMessage("name must be at least 1 chars long"),
+        body("password").isLength({ min: 1 }).withMessage("password must be at least 1 chars long"),
     ],
     async (req, res) => {
         try {
@@ -52,7 +52,7 @@ router.post(
 router.post(
     "/login",
     [
-        body("name").isLength({ min: 2 }).withMessage("What is your name?"),
+        body("name").isLength({ min: 1 }).withMessage("What is your name?"),
         body("password").exists().withMessage("Where is your password?"),
     ],
     async (req, res) => {

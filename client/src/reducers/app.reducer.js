@@ -3,8 +3,9 @@ import { APP } from "../core/actionNames";
 const { SET_FIELD, SET_DATA, RESET } = APP;
 
 const initialState = {
-    isAppLoading: true,
-    isAuth: false
+    loading: true,
+    logined: false,
+    user: null
 };
 
 export default function app(state = initialState, action) {
