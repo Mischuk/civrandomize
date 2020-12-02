@@ -6,6 +6,7 @@ $colors: (
     "success": green,
     "black": black,
     "white": white,
+    "border": #c3a97a,
 );
 
 @function color($name) {
@@ -87,5 +88,27 @@ $breakpoints: (
 
     @if ($wrap == true) {
         white-space: nowrap;
+    }
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: rgba(mix($foreground-color, white, 70%), 0.7)) {
+    // For Google Chrome
+    &::-webkit-scrollbar {
+        width: $size;
+        height: $size;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+
+    // For Internet Explorer
+    & {
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
     }
 }

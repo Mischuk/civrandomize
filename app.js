@@ -40,12 +40,24 @@ async function start() {
             console.log("connection", socket.id);
 
             socket.on("joinClient", async (data) => {
-                const newUser = {name: data.userName, id: socket.id};
+                const newUser = {name: data.userName, id: socket.id, status: false};
                 if ( !clients.find(({name}) => name === data.userName) ) {
                     clients.push(newUser);
                 }
 
                 io.sockets.emit("joinServer", { clients });
+            });
+
+            socket.on("leaveClient", async () => {
+                const idx = clients.findIndex(el => el.id === socket.id);
+                clients.splice(idx, 1);
+                socket.broadcast.emit("leaveServer", { clients });
+            });
+
+            socket.on("userUpdateStatusClient", async (value = false) => {
+                const idx = clients.findIndex(el => el.id === socket.id);
+                clients[idx].status = value;
+                io.sockets.emit("userUpdateStatusServer", { clients });
             });
 
             socket.on("disconnect", async () => {

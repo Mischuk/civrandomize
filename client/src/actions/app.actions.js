@@ -26,7 +26,6 @@ export function reset() {
 
 export function loginUser({ token, userId, userName }) {
     return dispatch => {
-        console.log("???");
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("userName", userName);
@@ -50,7 +49,9 @@ export function getData() {
         dispatch(setField("loading", true));
         const onSuccess = data => {
             dispatch(setField("data", data));
-            dispatch(setField("loading", false));
+            setTimeout(() => {
+                dispatch(setField("loading", false));
+            }, 1000);
             return data;
         };
 

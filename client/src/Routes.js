@@ -15,7 +15,7 @@ export const Routes = {
 };
 
 
-export const RoutesContainer = ({logined, socket}) => {
+export const RoutesContainer = ({socket}) => {
     return (
         <Switch>
             <Route exact path={Routes.Home} component={Page(Home, "Home title", socket)}></Route>

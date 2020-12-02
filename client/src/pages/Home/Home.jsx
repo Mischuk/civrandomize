@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/app.actions";
+import { CSSTransition } from "react-transition-group";
+import { loginUser, logoutUser } from "../../actions/app.actions";
 import Form from "../../components/Form";
+import Users from "../../components/Users/Users";
 import { useHttp } from "../../hooks/http.hook";
 import { loginedSelector, userSelector } from "../../selectors/app.selectors";
 import "./Home.styles.scss";
 
-
-
-
-function Home({ logined, loginUser, user, socket }) {
-
+function Home({ logined, loginUser, user, socket, logoutUser }) {
     const { loading, request, error, clearError } = useHttp();
-    const [totalConnections, setTotalConnections] = useState("");
+    const [users, setUsers] = useState([]);
+    const [showUsers, setShowUsers] = useState(false);
+    const [showForm, setShowForm] = useState(true);
 
-    useEffect(function() {
+
+
+    useEffect(() => {
+        const updateUsers = data => {
+            setUsers(
+                data.map(client => ({
+                    name: client.name,
+                    status: client.status,
+                    id: client.id,
+                })),
+            );
+        };
+
         socket.on("joinServer", ({ clients }) => {
-            console.log("joinServer", clients);
-
-            setTotalConnections(clients.map(client => client.name).join(", "));
+            console.log("Join server", clients);
+            updateUsers(clients);
         });
         socket.on("leaveServer", ({ clients }) => {
-            console.log("leaveServer", clients);
-            setTotalConnections(clients.map(client => client.name).join(", "));
+            console.log("Leave server", clients);
+            updateUsers(clients);
         });
-      }, [socket]);
+        socket.on("userUpdateStatusServer", ({clients}) => {
+            console.log("Update user status", clients);
+            updateUsers(clients);
+        })
+    }, [socket]);
 
     const loginHandler = async body => {
         try {
@@ -55,28 +70,26 @@ function Home({ logined, loginUser, user, socket }) {
         }
     };
 
+    const handleLogOut = () => {
+        socket.emit("leaveClient");
+        logoutUser();
+        setShowUsers(false);
+        setShowForm(false);
+    }
+
     return (
         <div className="Home">
-            <div className="Home__header">
-                {/* <div className="Home__header-item">
-                    Connected status:{" "}
-                    <span className={`Home__header-item-status ${isConnected ? "is-success" : "is-failure"}`}>
-                        {isConnected ? "online" : "offline"}
-                    </span>
-                </div> */}
-                <div className="Home__header-item">Total connections: {totalConnections}</div>
-            </div>
-            {!logined && (
-                <div className="Home__form">
-                    <Form action={handleFormSubmit} clearError={clearError} serverError={error} loading={loading} />
-                </div>
-            )}
+                <CSSTransition in={!logined && showForm} timeout={500} onExited={() => setShowUsers(true)} classNames="display" appear unmountOnExit>
+                    <div className="Home__form">
+                        <Form action={handleFormSubmit} clearError={clearError} serverError={error} loading={loading} />
+                    </div>
+                </CSSTransition>
+                <CSSTransition in={logined && showUsers} onExited={() => setShowForm(true)} timeout={500} classNames="display" appear unmountOnExit>
+                    <div className="Home__users">
+                        <Users socket={socket} leave={handleLogOut} currentUser={user} users={users} />
+                    </div>
+                </CSSTransition>
 
-            {logined && (
-                <div>
-                    <h1 style={{ color: "white" }}>Hello1, {user.name}</h1>
-                </div>
-            )}
         </div>
     );
 }
@@ -90,6 +103,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         loginUser: data => dispatch(loginUser(data)),
+        logoutUser: () => dispatch(logoutUser()),
     };
 };
 

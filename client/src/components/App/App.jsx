@@ -6,10 +6,9 @@ import { getData } from "../../actions/app.actions";
 import { RoutesContainer } from "../../Routes";
 import Loader from "../Loader";
 import "./App.styles.scss";
-const socket = io();
+const socket = io({timeout: 2000000});
 
-function App({ loading, logined, getData }) {
-
+function App({ loading, getData }) {
     useEffect(() => {
         getData();
     }, [getData]);
@@ -22,7 +21,7 @@ function App({ loading, logined, getData }) {
 
                 {!loading && (
                     <Router>
-                        <RoutesContainer socket={socket} logined={logined}  />
+                        <RoutesContainer socket={socket}  />
                     </Router>
                 )}
             </div>
@@ -31,8 +30,7 @@ function App({ loading, logined, getData }) {
 }
 
 const mapStateToProps = state => ({
-    loading: state.app.loading,
-    logined: state.app.logined,
+    loading: state.app.loading
 });
 
 const mapDispatchToProps = dispatch => {

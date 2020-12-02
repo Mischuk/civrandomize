@@ -20,32 +20,31 @@
         }
     }
 
-    &__header {
-        position: fixed;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &__users {
         width: 100%;
-        height: 40px;
-        border-bottom: 2px solid #c3a97a;
-        background: color("black");
-        box-shadow: 0 2px 30px black;
-
-        &-item {
-            margin-right: auto;
-            margin-left: auto;
-            color: color("white");
-
-            &-status {
-                &.is-success {
-                    color: color("success");
-                }
-
-                &.is-failure {
-                    color: color("error");
-                }
-            }
-        }
+        max-width: 700px;
+        height: 100%;
+        max-height: 500px;
+        padding: $gap;
     }
+}
+
+.display-enter,
+.display-appear {
+    opacity: 0;
+}
+
+.display-enter-active,
+.display-appear-active {
+    opacity: 1;
+    transition: opacity 500ms ease;
+}
+
+.display-exit {
+    opacity: 1;
+    transition: opacity 500ms ease;
+}
+
+.display-exit-active {
+    opacity: 0;
 }
