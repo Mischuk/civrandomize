@@ -1,0 +1,11 @@
+.RoomSettings {
+    @import "../../assets/styles/core.styles.scss";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 32px;
+    background: rgba(color("black"), 0.8);
+}

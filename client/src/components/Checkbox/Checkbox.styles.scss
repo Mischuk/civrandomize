@@ -1,8 +1,8 @@
 .Checkbox {
     @import "../../assets/styles/core.styles.scss";
 
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 100%;
     border: 2px solid color("border");
     border-radius: 5px;
     background: linear-gradient(135deg, #2a402c 0%, #1b3b39 50%, #020f05 100%);
@@ -16,7 +16,7 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: #77d16f;
+        color: color("white");
         cursor: url("../../assets/images/cursor/pointer.png") 5 5, auto;
 
         input {

@@ -91,7 +91,7 @@ $breakpoints: (
     }
 }
 
-@mixin scrollbars($size, $foreground-color, $background-color: rgba(mix($foreground-color, white, 70%), 0.7)) {
+@mixin scrollbars($size, $foreground-color, $background-color: rgba(mix($foreground-color, white, 30%), 0.8)) {
     // For Google Chrome
     &::-webkit-scrollbar {
         width: $size;
@@ -110,5 +110,41 @@ $breakpoints: (
     & {
         scrollbar-face-color: $foreground-color;
         scrollbar-track-color: $background-color;
+    }
+}
+
+@mixin header {
+    position: relative;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $header;
+    border-bottom: 2px solid color("border");
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+    text-transform: uppercase;
+    background: linear-gradient(to top, #587a75 0%, #0a5249 15%, #031b18 90%, #2d3f3c 100%);
+
+    &-title {
+        margin-right: auto;
+        padding-left: $gap;
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 1;
+        text-align: left;
+    }
+
+    &-actions {
+        height: 100%;
+    }
+
+    &-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 100%;
+        font-size: 36px;
     }
 }

@@ -1,19 +1,39 @@
-import React from "react";
-import { FaCogs } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import { GiBeaver } from "react-icons/gi";
+import socket from "../../core/socket";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
+import Modal from "../Modal/Modal";
+import NationsBan from "../NationsBan/NationsBan";
+import RoomSettings from "../RoomSettings/RoomSettings";
 import "./Users.styles.scss";
 
-const Users = ({ users = [], currentUser, leave, socket }) => {
-    console.log(`users: `, users);
+const Users = ({ users = [], currentUser, leave }) => {
+    const [allReady, setAllReady] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        let failureStatus = users.find(({status}) => status === false);
+        setAllReady(failureStatus);
+    }, [users]);
+
     const toggleReadyStatus = value => {
         socket.emit("userUpdateStatusClient", value);
     };
 
     return (
         <div className="Users">
-            <div className="Users__header">Waiting room...</div>
-            <div className="Users__body">
+            <div className="Users__header">
+                <div className="Users__header-title">Waiting room...</div>
+                <div className="Users__header-actions">
+                    <div className="Users__header-action" onClick={() => setShowMenu(!showMenu)}>
+                        {showMenu ? <FaAngleDoubleRight/> : <FaAngleDoubleLeft/>}
+                    </div>
+                </div>
+            </div>
+            <div className={`Users__body ${showMenu ? "has-backdrop": ""}`}>
                 <div className="Users__column">
                     <div className="Users__players">
                         {users.length > 0 &&
@@ -28,8 +48,8 @@ const Users = ({ users = [], currentUser, leave, socket }) => {
                                             {current && (
                                                 <>
                                                     <div className="Users__item-action">
-                                                        <div className="Users__bans">
-                                                            <FaCogs />
+                                                        <div className="Users__bans" onClick={() => setShowModal(true)}>
+                                                            <GiBeaver />
                                                         </div>
                                                     </div>
 
@@ -44,7 +64,9 @@ const Users = ({ users = [], currentUser, leave, socket }) => {
                             })}
                     </div>
                 </div>
-                <div className="Users__column">Room settings</div>
+                <div className={`Users__column Users__column--sidebar ${showMenu ? "is-open": "is-closed"}`}>
+                    <RoomSettings />
+                </div>
             </div>
             <div className="Users__footer">
                 <div className="Users__action">
@@ -55,11 +77,14 @@ const Users = ({ users = [], currentUser, leave, socket }) => {
                         action={() => {
                             console.log("Start game");
                         }}
-                        disabled={true}>
+                        disabled={allReady}>
                         Start
                     </Button>
                 </div>
             </div>
+            <Modal onClose={() => setShowModal(false)} title="Nations to ban" isOpen={showModal}>
+                <NationsBan />
+            </Modal>
         </div>
     );
 };

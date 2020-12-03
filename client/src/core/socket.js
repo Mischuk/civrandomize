@@ -1,2 +1,4 @@
 import { io } from "socket.io-client";
-export const socket = io({upgrade: false});
+const socket = io({timeout: 2000000});
+
+export default socket;

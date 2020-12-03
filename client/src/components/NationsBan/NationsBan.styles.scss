@@ -1,0 +1,114 @@
+.NationsBan {
+    @import "../../assets/styles/core.styles.scss";
+
+    $this: &;
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        border-top: 1px solid color("border");
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        padding: $gap / 2;
+        border-bottom: 1px solid color("border");
+        transition: all 300ms ease;
+
+        @include mq("xs", "min") {
+            width: 33.333%;
+
+            &:nth-child(3n + 1) {
+                border-left: 1px solid color("border");
+            }
+        }
+
+        @include mq("sm", "min") {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            width: 25%;
+            border-left: 1px solid color("border");
+
+            &:nth-child(4n),
+            &:last-child {
+                border-right: 1px solid color("border");
+            }
+        }
+
+        &:nth-child(odd) {
+            @include mq("sm", "max") {
+                border-right: 1px solid color("border");
+                border-left: 1px solid color("border");
+            }
+        }
+
+        &:nth-child(even) {
+            @include mq("sm", "max") {
+                border-right: 1px solid color("border");
+            }
+        }
+
+        &.is-limited {
+            filter: grayscale(1);
+        }
+
+        &.is-disabled {
+            // background: rgba(color("error"), 0.2);
+            #{$this}__name {
+                position: relative;
+                color: color("error");
+            }
+
+            #{$this}__image {
+                position: relative;
+
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    z-index: 1;
+                    width: 100%;
+                    height: 3px;
+                    background: color("error");
+                }
+
+                &:before {
+                    transform: rotate(-45deg);
+                }
+
+                &:after {
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+
+    &__image {
+        display: flex;
+        align-items: center;
+        height: 65px;
+
+        img {
+            max-height: 100%;
+        }
+    }
+
+    &__by {
+        @include truncate(50%);
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        display: none;
+        padding: 5px;
+        color: color("error");
+    }
+}

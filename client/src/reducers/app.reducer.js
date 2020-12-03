@@ -5,7 +5,8 @@ const { SET_FIELD, SET_DATA, RESET } = APP;
 const initialState = {
     loading: true,
     logined: false,
-    user: null
+    user: null,
+    bannedIds: []
 };
 
 export default function app(state = initialState, action) {

@@ -1,20 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import { loginUser, logoutUser } from "../../actions/app.actions";
+import { loginUser, logoutUser, setField } from "../../actions/app.actions";
 import Form from "../../components/Form";
 import Users from "../../components/Users/Users";
+import socket from "../../core/socket";
 import { useHttp } from "../../hooks/http.hook";
 import { loginedSelector, userSelector } from "../../selectors/app.selectors";
 import "./Home.styles.scss";
 
-function Home({ logined, loginUser, user, socket, logoutUser }) {
+function useTraceUpdate(props) {
+    const prev = useRef(props);
+    useEffect(() => {
+      const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+        if (prev.current[k] !== v) {
+          ps[k] = [prev.current[k], v];
+        }
+        return ps;
+      }, {});
+      if (Object.keys(changedProps).length > 0) {
+        console.log('Changed props:', changedProps);
+      }
+      prev.current = props;
+    });
+}
+
+function Home(props) {
+    useTraceUpdate(props);
+
+    const { logined, loginUser, user, logoutUser, updateBannedNations } = props;
     const { loading, request, error, clearError } = useHttp();
     const [users, setUsers] = useState([]);
     const [showUsers, setShowUsers] = useState(false);
     const [showForm, setShowForm] = useState(true);
-
-
 
     useEffect(() => {
         const updateUsers = data => {
@@ -35,11 +53,15 @@ function Home({ logined, loginUser, user, socket, logoutUser }) {
             console.log("Leave server", clients);
             updateUsers(clients);
         });
-        socket.on("userUpdateStatusServer", ({clients}) => {
+        socket.on("userUpdateStatusServer", ({ clients }) => {
             console.log("Update user status", clients);
             updateUsers(clients);
-        })
-    }, [socket]);
+        });
+        socket.on("banNationsServer", ({ bannedNations }) => {
+            console.log(`banNationsServer: `);
+            updateBannedNations(bannedNations);
+        });
+    }, [updateBannedNations]);
 
     const loginHandler = async body => {
         try {
@@ -75,28 +97,39 @@ function Home({ logined, loginUser, user, socket, logoutUser }) {
         logoutUser();
         setShowUsers(false);
         setShowForm(false);
-    }
+    };
 
     return (
         <div className="Home">
-                <CSSTransition in={!logined && showForm} timeout={500} onExited={() => setShowUsers(true)} classNames="display" appear unmountOnExit>
-                    <div className="Home__form">
-                        <Form action={handleFormSubmit} clearError={clearError} serverError={error} loading={loading} />
-                    </div>
-                </CSSTransition>
-                <CSSTransition in={logined && showUsers} onExited={() => setShowForm(true)} timeout={500} classNames="display" appear unmountOnExit>
-                    <div className="Home__users">
-                        <Users socket={socket} leave={handleLogOut} currentUser={user} users={users} />
-                    </div>
-                </CSSTransition>
-
+            <CSSTransition
+                in={!logined && showForm}
+                timeout={500}
+                onExited={() => setShowUsers(true)}
+                classNames="display"
+                appear
+                unmountOnExit>
+                <div className="Home__form">
+                    <Form action={handleFormSubmit} clearError={clearError} serverError={error} loading={loading} />
+                </div>
+            </CSSTransition>
+            <CSSTransition
+                in={logined && showUsers}
+                onExited={() => setShowForm(true)}
+                timeout={500}
+                classNames="display"
+                appear
+                unmountOnExit>
+                <div className="Home__users">
+                    <Users leave={handleLogOut} currentUser={user} users={users} />
+                </div>
+            </CSSTransition>
         </div>
     );
 }
 const mapStateToProps = state => {
     return {
         logined: loginedSelector(state),
-        user: userSelector(state),
+        user: userSelector(state)
     };
 };
 
@@ -104,7 +137,8 @@ const mapDispatchToProps = dispatch => {
     return {
         loginUser: data => dispatch(loginUser(data)),
         logoutUser: () => dispatch(logoutUser()),
+        updateBannedNations: (value) => dispatch(setField("bannedIds", value)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default React.memo(connect(mapStateToProps, mapDispatchToProps)(Home));

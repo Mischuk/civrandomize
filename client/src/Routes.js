@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 
-const Page = (Page, title, socket) => {
+const Page = (Page, title) => {
     useEffect(() => {
         document.title = title;
     }, [title]);
 
-    return props => <Page {...props} socket={socket}/>;
+    return props => <Page {...props}/>;
 };
 
 export const Routes = {
@@ -15,10 +15,10 @@ export const Routes = {
 };
 
 
-export const RoutesContainer = ({socket}) => {
+export const RoutesContainer = () => {
     return (
         <Switch>
-            <Route exact path={Routes.Home} component={Page(Home, "Home title", socket)}></Route>
+            <Route exact path={Routes.Home} component={Page(Home, "Home title")}></Route>
             <Redirect to={Routes.Home} />
         </Switch>
     )

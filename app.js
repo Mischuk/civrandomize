@@ -33,7 +33,7 @@ async function start() {
         });
 
         const clients = [];
-        // io.sockets.emit("users_count", clients);
+        let bannedNations = [];
 
 
         io.on("connection", (socket) => {
@@ -45,13 +45,18 @@ async function start() {
                     clients.push(newUser);
                 }
 
-                io.sockets.emit("joinServer", { clients });
+                io.emit("joinServer", { clients });
+                io.emit("banNationsServer", { bannedNations });
             });
 
             socket.on("leaveClient", async () => {
                 const idx = clients.findIndex(el => el.id === socket.id);
                 clients.splice(idx, 1);
                 socket.broadcast.emit("leaveServer", { clients });
+
+                const clearedBans = bannedNations.filter(el => el.socketId !== socket.id);
+                bannedNations = clearedBans;
+                socket.broadcast.emit("banNationsServer", { bannedNations });
             });
 
             socket.on("userUpdateStatusClient", async (value = false) => {
@@ -60,10 +65,31 @@ async function start() {
                 io.sockets.emit("userUpdateStatusServer", { clients });
             });
 
+            socket.on("banNationsClient", async (value) => {
+                const add = value.status;
+                const nationExists = bannedNations.find(el => el.id === value.id);
+
+                if ( add ) {
+                    if (!nationExists)  {
+                        bannedNations.push({id: value.id, status: value.status, name: value.name, socketId: socket.id});
+                    }
+                } else if ( nationExists ) {
+                        const idx = bannedNations.findIndex(el => el.id === value.id);
+                        bannedNations.splice(idx, 1);
+                    }
+
+                io.sockets.emit("banNationsServer", { bannedNations });
+            });
+
             socket.on("disconnect", async () => {
                 console.log("disconnect", socket.id);
                 const idx = clients.findIndex(el => el.id === socket.id);
                 clients.splice(idx, 1);
+
+                const clearedBans = bannedNations.filter(el => el.socketId !== socket.id);
+                bannedNations = clearedBans;
+                socket.broadcast.emit("banNationsServer", { bannedNations });
+
                 socket.broadcast.emit("leaveServer", { clients });
             });
         });
