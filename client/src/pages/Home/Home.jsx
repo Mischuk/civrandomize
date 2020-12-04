@@ -28,7 +28,7 @@ function useTraceUpdate(props) {
 function Home(props) {
     useTraceUpdate(props);
 
-    const { logined, loginUser, user, logoutUser, updateBannedNations } = props;
+    const { logined, loginUser, user, logoutUser, updateBannedNations, updateCurrentCounter } = props;
     const { loading, request, error, clearError } = useHttp();
     const [users, setUsers] = useState([]);
     const [showUsers, setShowUsers] = useState(false);
@@ -61,7 +61,11 @@ function Home(props) {
             console.log(`banNationsServer: `);
             updateBannedNations(bannedNations);
         });
-    }, [updateBannedNations]);
+        socket.on("updateCounterServer", ({ currentCounter }) => {
+            console.log(`updateCounterServer: `, currentCounter);
+            updateCurrentCounter(currentCounter);
+        });
+    }, [updateBannedNations, updateCurrentCounter]);
 
     const loginHandler = async body => {
         try {
@@ -138,6 +142,7 @@ const mapDispatchToProps = dispatch => {
         loginUser: data => dispatch(loginUser(data)),
         logoutUser: () => dispatch(logoutUser()),
         updateBannedNations: (value) => dispatch(setField("bannedIds", value)),
+        updateCurrentCounter: (value) => dispatch(setField("currentCounter", value)),
     };
 };
 

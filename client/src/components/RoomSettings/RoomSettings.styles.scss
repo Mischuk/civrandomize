@@ -1,11 +1,162 @@
-.RoomSettings {
-    @import "../../assets/styles/core.styles.scss";
+@import "../../assets/styles/core.styles.scss";
 
+.RoomSettings {
     display: flex;
-    align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    font-size: 32px;
+    font-size: 18px;
     background: rgba(color("black"), 0.8);
+
+    &__column {
+        position: relative;
+        min-width: 50%;
+        max-width: 50%;
+        max-height: 100%;
+        padding-top: $gap;
+        padding-bottom: $gap;
+        overflow: auto;
+
+        &.has-shadow {
+            &:after {
+                content: "";
+                position: sticky;
+                bottom: 105%;
+                left: 0;
+                z-index: 2;
+                display: block;
+                width: 100%;
+                height: 1px;
+                box-shadow: 0 0 20px 30px black;
+                transform: translateY(-3px);
+            }
+
+            &:before {
+                content: "";
+                position: sticky;
+                top: 105%;
+                left: 0;
+                z-index: 2;
+                display: block;
+                width: 100%;
+                height: 1px;
+                box-shadow: 0 0 20px 30px black;
+                transform: translateY(3px);
+            }
+        }
+    }
+
+    &__counter {
+        padding-right: $gap;
+        padding-left: $gap;
+        line-height: 1;
+
+        &-title {
+            margin-bottom: $gap;
+        }
+    }
+}
+
+.BannedNations {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    min-height: 90%;
+
+    &__no-data {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 33.333%;
+        padding: $gap;
+        font-size: 16px;
+
+        @include mq("sm") {
+            width: 50%;
+        }
+        @include mq("xs") {
+            width: 100%;
+        }
+    }
+
+    &__name {
+        @include truncate(100%);
+
+        position: relative;
+        color: color("error");
+        text-align: center;
+    }
+
+    &__image {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 65px;
+        height: 65px;
+
+        &:before,
+        &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 3px;
+            background: color("error");
+        }
+
+        &:before {
+            transform: rotate(-45deg);
+        }
+
+        &:after {
+            transform: rotate(45deg);
+        }
+    }
+}
+
+.Counter {
+    position: relative;
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &__inc,
+    &__dec {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 60px;
+    }
+
+    &__inc {
+        top: 0;
+    }
+
+    &__dec {
+        bottom: 0;
+    }
+
+    &__value {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        height: 180px;
+        padding: $gap;
+        border-right: 2px solid color("border");
+        border-left: 2px solid color("border");
+    }
 }

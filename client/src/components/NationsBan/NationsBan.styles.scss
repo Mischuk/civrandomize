@@ -54,7 +54,9 @@
         }
 
         &.is-limited {
-            filter: grayscale(1);
+            & > * {
+                filter: grayscale(1);
+            }
         }
 
         &.is-disabled {
@@ -104,11 +106,12 @@
         @include truncate(50%);
 
         position: absolute;
-        top: 0;
-        right: 0;
+        top: -1px;
+        right: -1px;
         z-index: 1;
-        display: none;
-        padding: 5px;
-        color: color("error");
+        padding: 2px 5px;
+        color: color("black");
+        font-size: 10px;
+        background: color("border");
     }
 }

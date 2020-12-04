@@ -1,39 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { setField } from "../../actions/app.actions";
 import socket from "../../core/socket";
 import { dataSelector, userSelector } from "../../selectors/app.selectors";
 import "./NationsBan.styles.scss";
 
-const NationsBan = ({ data, banNationRequest, user }) => {
-    console.log(`user: `, user);
-    const MAX_BAN = 3;
-    const [countBans, setCountBans] = useState(0);
-    const [localIds, setLocalIds] = useState([]);
+const MAX_BAN = 3;
 
-
+const NationsBan = ({ data, banNationRequest, user, localBannedIds, setLocalBannedIds }) => {
     const handleBan = (id, status) => {
-        if ( !status ) {
-            if ( !localIds.includes(id) ) return;
-            setCountBans(prevState => {
-                return prevState <= 1 ? 0 : prevState - 1
-            });
-            const idx = localIds.indexOf(id);
+        const onRemove = !status;
+        const hasLimit = localBannedIds.length >= MAX_BAN;
+
+        if (onRemove) {
+            if (!localBannedIds.includes(id)) return;
+
+            const idx = localBannedIds.indexOf(id);
+
             if (idx > -1) {
-                let copied = [...localIds];
+                let copied = [...localBannedIds];
                 copied.splice(idx, 1);
-                setLocalIds(copied);
+                setLocalBannedIds(copied);
             }
-        } else {
-            if ( countBans >= MAX_BAN ) return;
 
-            setLocalIds(prevState => [...prevState, id]);
-            setCountBans(prevState => {
-                return prevState >= 2 ? 3 : prevState + 1
-            });
-
+            socket.emit("banNationsClient", { id, status, name: user.name });
         }
 
-        socket.emit("banNationsClient", { id, status, name: user.name });
+        if (!onRemove && !hasLimit) {
+            setLocalBannedIds([...localBannedIds, id]);
+            socket.emit("banNationsClient", { id, status, name: user.name });
+        }
     };
 
     return (
@@ -44,7 +40,9 @@ const NationsBan = ({ data, banNationRequest, user }) => {
                         return (
                             <div
                                 onClick={() => handleBan(item.id, !item.banned)}
-                                className={`NationsBan__item ${item.banned ? "is-disabled" : ""} ${countBans >= MAX_BAN && !item.banned ? "is-limited" : ""}`}
+                                className={`NationsBan__item ${item.banned ? "is-disabled" : ""} ${
+                                    localBannedIds.length >= MAX_BAN && !item.banned ? "is-limited" : ""
+                                }`}
                                 key={item.id}>
                                 {item.banned && <div className="NationsBan__by">{item.bannedBy}</div>}
                                 <div className="NationsBan__name">{item.name}</div>
@@ -58,14 +56,19 @@ const NationsBan = ({ data, banNationRequest, user }) => {
         </div>
     );
 };
+
 const mapStateToProps = state => {
     return {
         data: dataSelector(state),
-        user: userSelector(state)
+        user: userSelector(state),
+        localBannedIds: state.app.localBannedIds,
     };
 };
 
+const mapDispatchtoProps = dispatch => {
+    return {
+        setLocalBannedIds: value => dispatch(setField("localBannedIds", value)),
+    };
+};
 
-
-
-export default connect(mapStateToProps, null)(NationsBan);
+export default connect(mapStateToProps, mapDispatchtoProps)(NationsBan);

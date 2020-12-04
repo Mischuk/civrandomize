@@ -6,7 +6,9 @@ const initialState = {
     loading: true,
     logined: false,
     user: null,
-    bannedIds: []
+    bannedIds: [],
+    localBannedIds: [],
+    currentCounter: 3
 };
 
 export default function app(state = initialState, action) {

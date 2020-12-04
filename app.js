@@ -8,6 +8,10 @@ const io = require("socket.io")(server);
 
 const { MONGO_URL, PORT } = require("./core/constants");
 
+const INIT_COUNTER = 3;
+const MAX_COUNTER = 4;
+const MIN_COUNTER = 1;
+
 app.use(express.json({ extended: true }));
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/nations", require("./routes/nations.routes"));
@@ -34,6 +38,7 @@ async function start() {
 
         const clients = [];
         let bannedNations = [];
+        let currentCounter = INIT_COUNTER;
 
 
         io.on("connection", (socket) => {
@@ -47,6 +52,13 @@ async function start() {
 
                 io.emit("joinServer", { clients });
                 io.emit("banNationsServer", { bannedNations });
+                io.emit("updateCounterServer", { currentCounter });
+            });
+
+            socket.on("updateCounterClient", async (value) => {
+                // eslint-disable-next-line no-nested-ternary
+                currentCounter = value <= MAX_COUNTER ? (value >= MIN_COUNTER ? value : MIN_COUNTER) : MAX_COUNTER;
+                io.emit("updateCounterServer", { currentCounter });
             });
 
             socket.on("leaveClient", async () => {
@@ -84,13 +96,17 @@ async function start() {
             socket.on("disconnect", async () => {
                 console.log("disconnect", socket.id);
                 const idx = clients.findIndex(el => el.id === socket.id);
-                clients.splice(idx, 1);
+
+                if ( idx >= 0 ) {
+                    clients.splice(idx, 1);
+                    socket.broadcast.emit("leaveServer", { clients });
+                }
 
                 const clearedBans = bannedNations.filter(el => el.socketId !== socket.id);
                 bannedNations = clearedBans;
                 socket.broadcast.emit("banNationsServer", { bannedNations });
 
-                socket.broadcast.emit("leaveServer", { clients });
+
             });
         });
 
