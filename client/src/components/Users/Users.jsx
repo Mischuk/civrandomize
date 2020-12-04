@@ -16,11 +16,15 @@ const Users = ({ users = [], currentUser, leave }) => {
 
     useEffect(() => {
         let failureStatus = users.find(({status}) => status === false);
-        setAllReady(failureStatus);
+        setAllReady(!failureStatus);
     }, [users]);
 
     const toggleReadyStatus = value => {
         socket.emit("userUpdateStatusClient", value);
+    };
+
+    const startGame = () => {
+        socket.emit("startGameClient");
     };
 
     return (
@@ -74,10 +78,8 @@ const Users = ({ users = [], currentUser, leave }) => {
                 </div>
                 <div className="Users__action">
                     <Button
-                        action={() => {
-                            console.log("Start game");
-                        }}
-                        disabled={allReady}>
+                        action={startGame}
+                        disabled={!allReady}>
                         Start
                     </Button>
                 </div>

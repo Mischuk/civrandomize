@@ -5,6 +5,7 @@ const path = require("path");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const { readFile } = require("./core/fs");
 
 const { MONGO_URL, PORT } = require("./core/constants");
 
@@ -40,13 +41,12 @@ async function start() {
         let bannedNations = [];
         let currentCounter = INIT_COUNTER;
 
-
-        io.on("connection", (socket) => {
+        io.on("connection", socket => {
             console.log("connection", socket.id);
 
-            socket.on("joinClient", async (data) => {
-                const newUser = {name: data.userName, id: socket.id, status: false};
-                if ( !clients.find(({name}) => name === data.userName) ) {
+            socket.on("joinClient", async data => {
+                const newUser = { name: data.userName, id: socket.id, status: false };
+                if (!clients.find(({ name }) => name === data.userName)) {
                     clients.push(newUser);
                 }
 
@@ -55,7 +55,7 @@ async function start() {
                 io.emit("updateCounterServer", { currentCounter });
             });
 
-            socket.on("updateCounterClient", async (value) => {
+            socket.on("updateCounterClient", async value => {
                 // eslint-disable-next-line no-nested-ternary
                 currentCounter = value <= MAX_COUNTER ? (value >= MIN_COUNTER ? value : MIN_COUNTER) : MAX_COUNTER;
                 io.emit("updateCounterServer", { currentCounter });
@@ -77,27 +77,70 @@ async function start() {
                 io.sockets.emit("userUpdateStatusServer", { clients });
             });
 
-            socket.on("banNationsClient", async (value) => {
+            socket.on("banNationsClient", async value => {
                 const add = value.status;
                 const nationExists = bannedNations.find(el => el.id === value.id);
 
-                if ( add ) {
-                    if (!nationExists)  {
-                        bannedNations.push({id: value.id, status: value.status, name: value.name, socketId: socket.id});
+                if (add) {
+                    if (!nationExists) {
+                        bannedNations.push({
+                            id: value.id,
+                            status: value.status,
+                            name: value.name,
+                            socketId: socket.id,
+                        });
                     }
-                } else if ( nationExists ) {
-                        const idx = bannedNations.findIndex(el => el.id === value.id);
-                        bannedNations.splice(idx, 1);
-                    }
+                } else if (nationExists) {
+                    const idx = bannedNations.findIndex(el => el.id === value.id);
+                    bannedNations.splice(idx, 1);
+                }
 
                 io.sockets.emit("banNationsServer", { bannedNations });
+            });
+
+            socket.on("startGameClient", async () => {
+                io.sockets.emit("startGameServer");
+
+                const getNationsData = async () => {
+                    const data = await readFile("nations.json");
+                    return data;
+                };
+                const nations = await getNationsData();
+
+                const randomedIds = [];
+                const users = clients.map(({ name }) => name); // ["1", "qwer"]
+                const bannedIds = bannedNations.map(({ id }) => id); // [5, 1, 2] || []
+                const allNationsIds = nations.nations.map(item => item.id); // [1, ... 41]
+                const nationsIdsForGame = allNationsIds.filter(f => !bannedIds.includes(f));
+                const gameIds = [...nationsIdsForGame];
+                console.log("gameIds: ", gameIds);
+
+                users.forEach(user => {
+                    const obj = {
+                        username: user,
+                        ids: []
+                    };
+                    // eslint-disable-next-line no-plusplus
+                    for (let index = 0; index < currentCounter; index++) {
+                        const randomIdx = Math.floor(Math.random() * (gameIds.length));
+                        const currentId = gameIds[randomIdx];
+                        obj.ids.push(currentId);
+                        gameIds.splice(randomIdx, 1);
+                    }
+
+                    randomedIds.push(obj);
+                });
+
+                setTimeout(() => {
+                    io.sockets.emit("sendRandomedServer", {randomedIds});
+                }, 2000);
             });
 
             socket.on("disconnect", async () => {
                 console.log("disconnect", socket.id);
                 const idx = clients.findIndex(el => el.id === socket.id);
 
-                if ( idx >= 0 ) {
+                if (idx >= 0) {
                     clients.splice(idx, 1);
                     socket.broadcast.emit("leaveServer", { clients });
                 }
@@ -105,13 +148,8 @@ async function start() {
                 const clearedBans = bannedNations.filter(el => el.socketId !== socket.id);
                 bannedNations = clearedBans;
                 socket.broadcast.emit("banNationsServer", { bannedNations });
-
-
             });
         });
-
-
-
     } catch (e) {
         console.log("Server error", e.message);
         process.exit(1);

@@ -8,7 +8,6 @@ import "./RoomSettings.styles.scss";
 
 const Counter = ({ currentCounter, action }) => {
     const handleClick = (updValue) => {
-        console.log(`value + updValue: `, currentCounter + updValue);
         action(currentCounter + updValue)
     }
     return (

@@ -8,7 +8,9 @@ const initialState = {
     user: null,
     bannedIds: [],
     localBannedIds: [],
-    currentCounter: 3
+    currentCounter: 3,
+    runGame: false,
+    randomedIds: []
 };
 
 export default function app(state = initialState, action) {
