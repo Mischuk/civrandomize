@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import useTraceUpdate from "use-trace-update";
 import { loginUser, logoutUser, setField } from "../../actions/app.actions";
 import ChooseNation from "../../components/ChooseNation/ChooseNation";
 import Form from "../../components/Form";
@@ -11,30 +12,26 @@ import { useHttp } from "../../hooks/http.hook";
 import { loginedSelector, userSelector } from "../../selectors/app.selectors";
 import "./Home.styles.scss";
 
-function useTraceUpdate(props) {
-    const prev = useRef(props);
-    useEffect(() => {
-        const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
-            if (prev.current[k] !== v) {
-                ps[k] = [prev.current[k], v];
-            }
-            return ps;
-        }, {});
-        if (Object.keys(changedProps).length > 0) {
-            console.log("Changed props:", changedProps);
-        }
-        prev.current = props;
-    });
-}
-
 function Home(props) {
-    // useTraceUpdate(props);
+    const {
+        logined,
+        loginUser,
+        user,
+        logoutUser,
+        updateBannedNations,
+        updateCurrentCounter,
+        runGame,
+        runGameStatus,
+        updateRandomedIds,
+        gameIds,
+        updateSelectedNations,
+        updateStateUsers,
+        showNationsSpinner
+    } = props;
 
-    const { logined, loginUser, user, logoutUser, updateBannedNations, updateCurrentCounter, runGame, runGameStatus, updateRandomedIds, gameIds, updateSelectedNations, selectedNationsGlobal } = props;
-    console.log(`selectedNationsGlobal: `, selectedNationsGlobal);
+    useTraceUpdate(props);
 
     const { loading, request, error, clearError } = useHttp();
-    const [users, setUsers] = useState([]);
     const [showUsers, setShowUsers] = useState(false);
     const [showForm, setShowForm] = useState(true);
     const [showRandomSpinner, setShowRandomSpinner] = useState(false);
@@ -42,48 +39,42 @@ function Home(props) {
 
     useEffect(() => {
         const updateUsers = data => {
-            setUsers(
-                data.map(client => ({
-                    name: client.name,
-                    status: client.status,
-                    id: client.id,
-                })),
-            );
+            updateStateUsers(data.map(client => ({
+                name: client.name,
+                status: client.status,
+                id: client.id,
+            })))
         };
 
         socket.on("joinServer", ({ clients }) => {
-            console.log("Join server", clients);
             updateUsers(clients);
         });
         socket.on("leaveServer", ({ clients }) => {
-            console.log("Leave server", clients);
             updateUsers(clients);
         });
         socket.on("userUpdateStatusServer", ({ clients }) => {
-            console.log("Update user status", clients);
             updateUsers(clients);
         });
         socket.on("banNationsServer", ({ bannedNations }) => {
-            console.log(`banNationsServer: `);
             updateBannedNations(bannedNations);
         });
         socket.on("updateCounterServer", ({ currentCounter }) => {
-            console.log(`updateCounterServer: `, currentCounter);
             updateCurrentCounter(currentCounter);
         });
         socket.on("startGameServer", () => {
+            console.log(`startGameServer: `);
             runGame(true);
+            showNationsSpinner(true);
         });
-        socket.on("sendRandomedServer", ({randomedIds}) => {
-            console.log(`sendRandomedServer: `, randomedIds);
+        socket.on("sendRandomedServer", ({ randomedIds }) => {
             updateRandomedIds(randomedIds);
+            updateSelectedNations([]);
+            showNationsSpinner(false);
         });
-
-        socket.on("selectNationServer", ({selectedNations}) => {
-            console.log(`selectedNations: `, selectedNations);
+        socket.on("selectNationServer", ({ selectedNations }) => {
             updateSelectedNations(selectedNations);
         });
-    }, [updateBannedNations, updateCurrentCounter, runGame, user, updateRandomedIds, updateSelectedNations]);
+    }, [updateBannedNations, updateCurrentCounter, runGame, user, updateRandomedIds, updateSelectedNations, updateStateUsers, showNationsSpinner]);
 
     const loginHandler = async body => {
         try {
@@ -114,12 +105,12 @@ function Home(props) {
         }
     };
 
-    const handleLogOut = () => {
+    const handleLogOut = useCallback(() => {
         socket.emit("leaveClient");
         logoutUser();
         setShowUsers(false);
         setShowForm(false);
-    };
+    }, [logoutUser]);
 
     return (
         <div className="Home">
@@ -136,26 +127,38 @@ function Home(props) {
             </CSSTransition>
             <CSSTransition
                 in={logined && showUsers && !runGameStatus}
-                onExited={() => {setShowForm(true); setShowRandomSpinner(true);}}
+                onExited={() => {
+                    setShowForm(true);
+                    setShowRandomSpinner(true);
+                }}
                 timeout={500}
                 classNames="display"
                 appear
                 unmountOnExit>
                 <div className="Home__users">
-                    <Users leave={handleLogOut} currentUser={user} users={users} />
+                    <Users leave={handleLogOut} currentUser={user} />
                 </div>
             </CSSTransition>
-            <CSSTransition in={runGameStatus && showRandomSpinner && gameIds.length === 0} timeout={500} classNames="display"
+            <CSSTransition
+                in={runGameStatus && showRandomSpinner && gameIds.length === 0}
+                timeout={500}
+                classNames="display"
                 appear
-                onExited={() => {setChooseView(true);}}
+                onExited={() => {
+                    setChooseView(true);
+                }}
                 unmountOnExit>
                 <div>
-                <RandomSpinner />
+                    <RandomSpinner />
                 </div>
             </CSSTransition>
-            <CSSTransition in={chooseView && gameIds.length > 0} timeout={500} classNames="display" appear
+            <CSSTransition
+                in={chooseView && gameIds.length > 0}
+                timeout={500}
+                classNames="display"
+                appear
                 unmountOnExit>
-                <ChooseNation gameIds={gameIds} currentUser={user} selected={selectedNationsGlobal}/>
+                <ChooseNation gameIds={gameIds} currentUser={user} />
             </CSSTransition>
         </div>
     );
@@ -166,7 +169,6 @@ const mapStateToProps = state => {
         user: userSelector(state),
         runGameStatus: state.app.runGame,
         gameIds: state.app.randomedIds,
-        selectedNationsGlobal: state.app.selectedNationsGlobal || [],
     };
 };
 
@@ -179,6 +181,8 @@ const mapDispatchToProps = dispatch => {
         runGame: value => dispatch(setField("runGame", value)),
         updateRandomedIds: value => dispatch(setField("randomedIds", value)),
         updateSelectedNations: value => dispatch(setField("selectedNationsGlobal", value)),
+        updateStateUsers: value => dispatch(setField("users", value)),
+        showNationsSpinner: value => dispatch(setField("showNationsSpinner", value)),
     };
 };
 

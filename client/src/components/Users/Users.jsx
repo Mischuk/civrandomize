@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
-import { GiBeaver } from "react-icons/gi";
+import useTraceUpdate from "use-trace-update";
 import socket from "../../core/socket";
-import Button from "../Button";
-import Checkbox from "../Checkbox";
 import Modal from "../Modal/Modal";
 import NationsBan from "../NationsBan/NationsBan";
 import RoomSettings from "../RoomSettings/RoomSettings";
+import UsersActions from "../UsersActions/UsersActions";
+import UsersList from "../UsersList/UsersList";
 import "./Users.styles.scss";
 
-const Users = ({ users = [], currentUser, leave }) => {
-    const [allReady, setAllReady] = useState(false);
+const Users = (props) => {
+    useTraceUpdate(props);
+    const { currentUser, leave } = props;
+
     const [showMenu, setShowMenu] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        let failureStatus = users.find(({status}) => status === false);
-        setAllReady(!failureStatus);
-    }, [users]);
-
     const toggleReadyStatus = value => {
         socket.emit("userUpdateStatusClient", value);
-    };
-
-    const startGame = () => {
-        socket.emit("startGameClient");
     };
 
     return (
@@ -40,32 +33,7 @@ const Users = ({ users = [], currentUser, leave }) => {
             <div className={`Users__body ${showMenu ? "has-backdrop": ""}`}>
                 <div className="Users__column">
                     <div className="Users__players">
-                        {users.length > 0 &&
-                            users.map(user => {
-                                const current = currentUser ? user.name === currentUser.name : false;
-                                return (
-                                    <div
-                                        key={user.id}
-                                        className={`Users__item ${user.status ? "is-ready" : "is-wait"}`}>
-                                        <div className="Users__item-name">{user.name}</div>
-                                        <div className="Users__item-actions">
-                                            {current && (
-                                                <>
-                                                    <div className="Users__item-action">
-                                                        <div className="Users__bans" onClick={() => setShowModal(true)}>
-                                                            <GiBeaver />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="Users__item-action">
-                                                        <Checkbox value={user.status} onUpdate={toggleReadyStatus} />
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                        <UsersList currentUser={currentUser} toggleReadyStatus={toggleReadyStatus} setShowModal={setShowModal} />
                     </div>
                 </div>
                 <div className={`Users__column Users__column--sidebar ${showMenu ? "is-open": "is-closed"}`}>
@@ -73,16 +41,7 @@ const Users = ({ users = [], currentUser, leave }) => {
                 </div>
             </div>
             <div className="Users__footer">
-                <div className="Users__action">
-                    <Button action={leave}>Leave</Button>
-                </div>
-                <div className="Users__action">
-                    <Button
-                        action={startGame}
-                        disabled={!allReady}>
-                        Start
-                    </Button>
-                </div>
+                <UsersActions leave={leave}/>
             </div>
             <Modal onClose={() => setShowModal(false)} title="Nations to ban" isOpen={showModal}>
                 <NationsBan />

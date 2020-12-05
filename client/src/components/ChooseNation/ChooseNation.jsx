@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { AiOutlineLike } from "react-icons/ai";
 import { connect } from "react-redux";
+import useTraceUpdate from "use-trace-update";
 import socket from "../../core/socket";
 import Button from "../Button";
+import Modal from "../Modal/Modal";
+import RandomSpinner from "../RandomSpinner/RandomSpinner";
+import UsersActions from "../UsersActions/UsersActions";
 import "./ChooseNation.scss";
 
-const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
-    console.log(`selected: `, selected);
+const ChooseNation = props => {
+    useTraceUpdate(props);
+    const { gameIds, currentUser, data, selected, showNationsSpinner } = props;
     const getCurrentUserIds = gameIds.find(({ username }) => username === currentUser.name).ids;
     const nations = data.filter(f => getCurrentUserIds.includes(f.id));
     const [selectedId, setSelectedId] = useState(null);
     const [submited, setSubmited] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalChild, setModalChild] = useState(null);
+
+    useEffect(() => {
+        setSubmited(false);
+        setSelectedId(false);
+        setShowModal(false);
+    }, [showNationsSpinner]);
 
     const handleSelect = id => {
         setSelectedId(id);
@@ -26,7 +40,70 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
             <div className="ChooseNation__selected-nation">
                 <div className="ChooseNation__selected-nation-name">{currentNation.name} </div>
                 <div className="ChooseNation__selected-nation-image">
-                    <img src={currentNation.image} alt="" />
+                    <img src={currentNation.image} alt="" onDoubleClick={() => handleOpenModal(currentNation.id)} />
+                </div>
+            </div>
+        );
+    };
+
+    const handleReRandom = () => {
+        handleSelect(null);
+        setShowModal(false);
+    };
+
+    const handleOpenModal = id => {
+        setShowModal(true);
+        setModalChild(data.find(item => item.id === id));
+    };
+
+    const renderNation = player => {
+        const { unique, info } = player;
+        return (
+            <div className="nation">
+                <div className="nation__unique">
+                    {unique.map((el, index) => (
+                        <div key={index} className="nation__unique-item">
+                            {el}
+                        </div>
+                    ))}
+                </div>
+
+                {player.buildings && (
+                    <div className="nation__unique nation__unique--nested">
+                        {player.buildings.map((el, index) => (
+                            <div key={index} className="nation__unique-item">
+                                <div className="nation__title nation__title--small">
+                                    <img className="nation__title-image" src={el.image} alt="" />
+                                    {el.title}
+                                    <div className="nation__sub-title">{el.desc}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {player.units && (
+                    <div className="nation__unique nation__unique--nested">
+                        {player.units.map((el, index) => (
+                            <div key={index} className="nation__unique-item">
+                                <div className="nation__title nation__title--small">
+                                    <img className="nation__title-image" src={el.image} alt="" />
+                                    {el.title}
+                                    <div className="nation__sub-title">{el.desc}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                <div className="nation__unique">
+
+                    <div className="nation__unique-item">
+                        {info.type.map((el, index) => (
+                            <span key={index}>{index > 0 && " / "}{el}</span>
+                        ))}
+                    </div>
+                    <div className="nation__unique-item">{info.boost}</div>
                 </div>
             </div>
         );
@@ -34,7 +111,8 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
 
     return (
         <div className="ChooseNation">
-            {submited && (
+            {showNationsSpinner && <RandomSpinner />}
+            {submited && !showNationsSpinner && (
                 <div className="ChooseNation__selected">
                     {gameIds.map(el => {
                         return (
@@ -62,7 +140,7 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
                     })}
                 </div>
             )}
-            {!submited && (
+            {!submited && !showNationsSpinner && (
                 <>
                     <div className="ChooseNation__list">
                         {nations.map(el => {
@@ -71,7 +149,7 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
                                     className={`ChooseNation__item ${
                                         selectedId && selectedId !== el.id ? "is-unselected" : ""
                                     }`}
-                                    onDoubleClick={() => alert("show popup")}
+                                    onDoubleClick={() => handleOpenModal(el.id)}
                                     onClick={() => handleSelect(el.id)}
                                     key={el.id}>
                                     <div className="ChooseNation__name">{el.name}</div>
@@ -83,13 +161,27 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
                             );
                         })}
                     </div>
-                    <div className="ChooseNation__submit">
-                        <Button action={handleSubmit} disabled={!selectedId}>
-                            Submit
-                        </Button>
+                    <div className="ChooseNation__actions">
+                        <div className="ChooseNation__next" onClick={() => handleReRandom()}>
+                            <UsersActions tryAgain />
+                        </div>
+                        <div className="ChooseNation__submit">
+                            <Button action={handleSubmit} disabled={!selectedId}>
+                                <AiOutlineLike style={{ fontSize: "36px" }} />
+                            </Button>
+                        </div>
                     </div>
                 </>
             )}
+            <Modal
+                onClose={() => {
+                    setShowModal(false);
+                    setModalChild(null);
+                }}
+                title={modalChild && modalChild.name}
+                isOpen={showModal}>
+                {modalChild && renderNation(modalChild)}
+            </Modal>
         </div>
     );
 };
@@ -97,6 +189,8 @@ const ChooseNation = ({ gameIds, currentUser, data, selected }) => {
 const mapStateToProps = state => {
     return {
         data: state.app.data.nations,
+        selected: state.app.selectedNationsGlobal || [],
+        showNationsSpinner: state.app.showNationsSpinner,
     };
 };
 

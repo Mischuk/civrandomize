@@ -55,14 +55,14 @@ function RoomSettings({ data, currentCounter }) {
 
     return (
         <div className="RoomSettings">
-            <div className="RoomSettings__column has-shadow">
+            <div className="RoomSettings__column">
                 <div className="BannedNations">
                     <BannedNations data={bannedItems} />
                 </div>
             </div>
             <div className="RoomSettings__column">
                 <div className="RoomSettings__counter">
-                    <div className="RoomSettings__counter-title">Nations to choise</div>
+                    {/* <div className="RoomSettings__counter-title">Nations to choose</div> */}
                     <Counter action={handleUpdateCounter} currentCounter={currentCounter} />
                 </div>
             </div>
