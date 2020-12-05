@@ -40,6 +40,7 @@ async function start() {
         const clients = [];
         let bannedNations = [];
         let currentCounter = INIT_COUNTER;
+        let selectedNations = [];
 
         io.on("connection", socket => {
             console.log("connection", socket.id);
@@ -100,7 +101,7 @@ async function start() {
 
             socket.on("startGameClient", async () => {
                 io.sockets.emit("startGameServer");
-
+                selectedNations = [];
                 const getNationsData = async () => {
                     const data = await readFile("nations.json");
                     return data;
@@ -113,7 +114,6 @@ async function start() {
                 const allNationsIds = nations.nations.map(item => item.id); // [1, ... 41]
                 const nationsIdsForGame = allNationsIds.filter(f => !bannedIds.includes(f));
                 const gameIds = [...nationsIdsForGame];
-                console.log("gameIds: ", gameIds);
 
                 users.forEach(user => {
                     const obj = {
@@ -134,6 +134,11 @@ async function start() {
                 setTimeout(() => {
                     io.sockets.emit("sendRandomedServer", {randomedIds});
                 }, 2000);
+            });
+
+            socket.on("selectNationClient", async (value) => {
+                selectedNations.push(value)
+                io.sockets.emit("selectNationServer", {selectedNations});
             });
 
             socket.on("disconnect", async () => {

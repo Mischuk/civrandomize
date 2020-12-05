@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { loginUser, logoutUser, setField } from "../../actions/app.actions";
+import ChooseNation from "../../components/ChooseNation/ChooseNation";
 import Form from "../../components/Form";
 import RandomSpinner from "../../components/RandomSpinner/RandomSpinner";
 import Users from "../../components/Users/Users";
@@ -27,14 +28,17 @@ function useTraceUpdate(props) {
 }
 
 function Home(props) {
-    useTraceUpdate(props);
+    // useTraceUpdate(props);
 
-    const { logined, loginUser, user, logoutUser, updateBannedNations, updateCurrentCounter, runGame, runGameStatus, updateRandomedIds, randomedIds } = props;
+    const { logined, loginUser, user, logoutUser, updateBannedNations, updateCurrentCounter, runGame, runGameStatus, updateRandomedIds, gameIds, updateSelectedNations, selectedNationsGlobal } = props;
+    console.log(`selectedNationsGlobal: `, selectedNationsGlobal);
+
     const { loading, request, error, clearError } = useHttp();
     const [users, setUsers] = useState([]);
     const [showUsers, setShowUsers] = useState(false);
     const [showForm, setShowForm] = useState(true);
     const [showRandomSpinner, setShowRandomSpinner] = useState(false);
+    const [chooseView, setChooseView] = useState(false);
 
     useEffect(() => {
         const updateUsers = data => {
@@ -72,13 +76,14 @@ function Home(props) {
         });
         socket.on("sendRandomedServer", ({randomedIds}) => {
             console.log(`sendRandomedServer: `, randomedIds);
-            if ( user ) {
-
-                let filtered = randomedIds.filter(item => item.username === user.name);
-                updateRandomedIds(filtered.ids);
-            }
+            updateRandomedIds(randomedIds);
         });
-    }, [updateBannedNations, updateCurrentCounter, runGame, user, updateRandomedIds]);
+
+        socket.on("selectNationServer", ({selectedNations}) => {
+            console.log(`selectedNations: `, selectedNations);
+            updateSelectedNations(selectedNations);
+        });
+    }, [updateBannedNations, updateCurrentCounter, runGame, user, updateRandomedIds, updateSelectedNations]);
 
     const loginHandler = async body => {
         try {
@@ -140,12 +145,17 @@ function Home(props) {
                     <Users leave={handleLogOut} currentUser={user} users={users} />
                 </div>
             </CSSTransition>
-            <CSSTransition in={runGameStatus && showRandomSpinner} timeout={500} classNames="display"
+            <CSSTransition in={runGameStatus && showRandomSpinner && gameIds.length === 0} timeout={500} classNames="display"
                 appear
+                onExited={() => {setChooseView(true);}}
                 unmountOnExit>
                 <div>
                 <RandomSpinner />
                 </div>
+            </CSSTransition>
+            <CSSTransition in={chooseView && gameIds.length > 0} timeout={500} classNames="display" appear
+                unmountOnExit>
+                <ChooseNation gameIds={gameIds} currentUser={user} selected={selectedNationsGlobal}/>
             </CSSTransition>
         </div>
     );
@@ -155,7 +165,8 @@ const mapStateToProps = state => {
         logined: loginedSelector(state),
         user: userSelector(state),
         runGameStatus: state.app.runGame,
-        randomedIds: state.app.randomedIds,
+        gameIds: state.app.randomedIds,
+        selectedNationsGlobal: state.app.selectedNationsGlobal || [],
     };
 };
 
@@ -167,6 +178,7 @@ const mapDispatchToProps = dispatch => {
         updateCurrentCounter: value => dispatch(setField("currentCounter", value)),
         runGame: value => dispatch(setField("runGame", value)),
         updateRandomedIds: value => dispatch(setField("randomedIds", value)),
+        updateSelectedNations: value => dispatch(setField("selectedNationsGlobal", value)),
     };
 };
 

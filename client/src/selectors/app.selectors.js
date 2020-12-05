@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 
 export const appSelector = state => cloneDeep(state.app);
 export const bannedIdsSelector = state => cloneDeep(state.app.bannedIds);
+export const idsSelector = state => cloneDeep(state.app.randomedIds);
 
 export const loginedSelector = createSelector(
     appSelector,
@@ -15,7 +16,6 @@ export const dataSelector = createSelector(
     appSelector,
     bannedIdsSelector,
     (app, bannedIds) => {
-        console.log(`bannedIds: `, bannedIds);
         const updatedNations = app.data.nations.map(el => {
             const finded = bannedIds.find(item => item.id === el.id);
             if ( finded ) {
